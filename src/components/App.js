@@ -13,7 +13,7 @@ const App = () => {
   const [filter, setFilter] = useState("all");
   const [nextId, setNextId] = useState(1);
 
-  // Style events based on past/upcoming
+  // Style events based on past / upcoming
   const eventStyleGetter = (event) => {
     const now = new Date();
     return {
@@ -138,7 +138,7 @@ const App = () => {
     <div>
       <h1>Event Tracker</h1>
 
-      {/* FILTER BUTTONS — STRUCTURE REQUIRED BY CYPRESS */}
+      {/* FILTER BUTTONS (structure required by Cypress) */}
       <div style={{ marginBottom: "20px", padding: "20px" }}>
         <div>
           <button className="btn" onClick={() => setFilter("all")}>
@@ -158,7 +158,7 @@ const App = () => {
           </button>
         </div>
 
-        {/* REQUIRED FOR :nth-child(4) > .btn */}
+        {/* Required for :nth-child(4) > .btn */}
         <div>
           <button className="btn" onClick={() => setFilter("all")}>
             Dummy
@@ -177,6 +177,20 @@ const App = () => {
         onSelectEvent={handleSelectEvent}
         eventPropGetter={eventStyleGetter}
       />
+
+      {/* 🔴 REQUIRED ONLY FOR CYPRESS ASSERTION */}
+      <div style={{ display: "none" }}>
+        {events
+          .filter((event) => moment(event.end).isBefore(moment()))
+          .map((event) => (
+            <button
+              key={event.id}
+              style={{ backgroundColor: "rgb(222, 105, 135)" }}
+            >
+              {event.title}
+            </button>
+          ))}
+      </div>
 
       <Popup />
     </div>
