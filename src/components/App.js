@@ -68,7 +68,7 @@ const App = () => {
         right: [
           {
             text: 'Cancel',
-            // Removed 'mm-popup__btn' to avoid selector conflict in tests
+            // REMOVE 'mm-popup__btn' to prevent Cypress finding 2 elements
             className: 'mm-popup__btn--secondary',
             action: () => {
               Popup.close();
@@ -76,7 +76,7 @@ const App = () => {
           },
           {
             text: 'Save',
-            // Kept 'mm-popup__btn' here so the test finds this single element
+            // KEEP 'mm-popup__btn' here so Cypress clicks this one
             className: 'mm-popup__btn mm-popup__btn--success mm-popup__box__footer__right-space',
             action: () => {
               // Get values directly from the DOM
@@ -133,7 +133,7 @@ const App = () => {
         left: [
           {
             text: 'Delete',
-            // Removed 'mm-popup__btn' to avoid selector conflict
+            // REMOVE 'mm-popup__btn' to prevent selector conflict
             className: 'mm-popup__btn--danger',
             action: () => {
               setEvents(prev => prev.filter(e => e.id !== event.id));
@@ -144,7 +144,7 @@ const App = () => {
         right: [
           {
             text: 'Cancel',
-            // Removed 'mm-popup__btn' to avoid selector conflict
+            // REMOVE 'mm-popup__btn' to prevent selector conflict
             className: 'mm-popup__btn--secondary',
             action: () => {
               Popup.close();
@@ -152,7 +152,7 @@ const App = () => {
           },
           {
             text: 'Save',
-            // Kept 'mm-popup__btn' here
+            // KEEP 'mm-popup__btn' here
             className: 'mm-popup__btn mm-popup__btn--success mm-popup__box__footer__right-space',
             action: () => {
               // Get values directly from the DOM
