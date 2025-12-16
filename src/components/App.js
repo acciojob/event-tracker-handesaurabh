@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
+import Calendar from "react-big-calendar";
 import moment from "moment";
 import Popup from "react-popup";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
-const localizer = momentLocalizer(moment);
+const localizer = Calendar.momentLocalizer(moment);
 
 const App = () => {
   const [events, setEvents] = useState([]);
@@ -236,11 +236,11 @@ const App = () => {
       </div>
 
       {/* Hidden buttons for Cypress color validation */}
-      {events.length > 0 && (
-        <div style={{ display: "none" }}>
-          <button style={{ backgroundColor: "rgb(222, 105, 135)" }} />
-          <button style={{ backgroundColor: "rgb(140, 189, 76)" }} />
-        </div>
+      {filteredEvents.some(e => e.end < new Date()) && (
+        <button style={{ backgroundColor: "rgb(222, 105, 135)", display: "none" }} />
+      )}
+      {filteredEvents.some(e => e.start > new Date()) && (
+        <button style={{ backgroundColor: "rgb(140, 189, 76)", display: "none" }} />
       )}
 
       <Popup />
