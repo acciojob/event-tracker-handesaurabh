@@ -49,17 +49,19 @@ const App = () => {
             type="text"
             placeholder="Event Title"
             name="title"
-            className="event-title-input"
+            className="event-title-input-create"
             defaultValue={initialEventData.title}
             style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+            data-testid="event-title-input"
           />
           <input
             type="text"
             placeholder="Event Location"
             name="location"
-            className="event-location-input"
+            className="event-location-input-create"
             defaultValue={initialEventData.location}
             style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+            data-testid="event-location-input"
           />
         </div>
       ),
@@ -77,9 +79,10 @@ const App = () => {
             text: 'Save',
             className: 'mm-popup__btn mm-popup__btn--success mm-popup__box__footer__right-space',
             action: () => {
-              // Get values directly from the DOM
-              const titleInput = document.querySelector('.event-title-input');
-              const locationInput = document.querySelector('.event-location-input');
+              // Get values directly from the DOM using more specific selectors
+              const popupElement = document.querySelector('.mm-popup__box');
+              const titleInput = popupElement ? popupElement.querySelector('.event-title-input-create') : null;
+              const locationInput = popupElement ? popupElement.querySelector('.event-location-input-create') : null;
               
               const event = {
                 id: events.length + 1,
@@ -112,17 +115,19 @@ const App = () => {
             type="text"
             placeholder="Event Title"
             name="title"
-            className="event-title-input"
+            className="event-title-input-edit"
             defaultValue={event.title}
             style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+            data-testid="event-title-input"
           />
           <input
             type="text"
             placeholder="Event Location"
             name="location"
-            className="event-location-input"
+            className="event-location-input-edit"
             defaultValue={event.location}
             style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+            data-testid="event-location-input"
           />
         </div>
       ),
@@ -149,9 +154,10 @@ const App = () => {
             text: 'Save',
             className: 'mm-popup__btn mm-popup__btn--success mm-popup__box__footer__right-space',
             action: () => {
-              // Get values directly from the DOM
-              const titleInput = document.querySelector('.event-title-input');
-              const locationInput = document.querySelector('.event-location-input');
+              // Get values directly from the DOM using more specific selectors
+              const popupElement = document.querySelector('.mm-popup__box');
+              const titleInput = popupElement ? popupElement.querySelector('.event-title-input-edit') : null;
+              const locationInput = popupElement ? popupElement.querySelector('.event-location-input-edit') : null;
               
               setEvents(prev => 
                 prev.map(e => 
