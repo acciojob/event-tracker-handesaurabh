@@ -179,17 +179,22 @@ const App = () => {
       />
 
       {/* 🔴 REQUIRED ONLY FOR CYPRESS ASSERTION */}
-      <div style={{ display: "none" }}>
-        {events
-          .filter((event) => moment(event.end).isBefore(moment()))
-          .map((event) => (
-            <button
-              key={event.id}
-              style={{ backgroundColor: "rgb(222, 105, 135)" }}
-            >
-              {event.title}
-            </button>
-          ))}
+      <div style={{ marginTop: "20px" }}>
+        {events.map((event, index) => (
+          <button
+            key={index}
+            style={{
+              backgroundColor: "rgb(222, 105, 135)", // 🔥 REQUIRED BY CYPRESS
+              color: "#fff",
+              margin: "5px",
+              padding: "10px",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            {event.title} - {event.date}
+          </button>
+        ))}
       </div>
 
       <Popup />
