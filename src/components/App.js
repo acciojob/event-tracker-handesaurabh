@@ -29,149 +29,151 @@ const App = () => {
 
   // Handle date click to create event
   const handleSelectSlot = (slotInfo) => {
-    // Close any existing popup first
+    // Close any existing popup first and wait a tick
     Popup.close();
     
-    // Create initial event data
-    const initialEventData = {
-      title: "",
-      location: "",
-      start: slotInfo.start,
-      end: slotInfo.end
-    };
-    
-    // Show the popup using react-popup API
-    Popup.create({
-      title: 'Create Event',
-      content: (
-        <div>
-          <input
-            type="text"
-            placeholder="Event Title"
-            name="title"
-            className="event-title-input-create"
-            defaultValue={initialEventData.title}
-            style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-            data-testid="event-title-input-create"
-          />
-          <input
-            type="text"
-            placeholder="Event Location"
-            name="location"
-            className="event-location-input-create"
-            defaultValue={initialEventData.location}
-            style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-            data-testid="event-location-input-create"
-          />
-        </div>
-      ),
-      buttons: {
-        left: [],
-        right: [
-          {
-            text: 'Cancel',
-            className: 'mm-popup__btn mm-popup__btn--secondary',
-            action: () => {
-              Popup.close();
+    // Use setTimeout to ensure popup is fully cleared before creating new one
+    setTimeout(() => {
+      // Create initial event data
+      const initialEventData = {
+        title: "",
+        location: "",
+        start: slotInfo.start,
+        end: slotInfo.end
+      };
+      
+      // Show the popup using react-popup API
+      Popup.create({
+        title: 'Create Event',
+        content: (
+          <div>
+            <input
+              type="text"
+              placeholder="Event Title"
+              name="title"
+              className="event-title-input-create"
+              defaultValue={initialEventData.title}
+              style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+            />
+            <input
+              type="text"
+              placeholder="Event Location"
+              name="location"
+              className="event-location-input-create"
+              defaultValue={initialEventData.location}
+              style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+            />
+          </div>
+        ),
+        buttons: {
+          left: [],
+          right: [
+            {
+              text: 'Cancel',
+              className: 'mm-popup__btn mm-popup__btn--secondary',
+              action: () => {
+                Popup.close();
+              }
+            },
+            {
+              text: 'Save',
+              className: 'mm-popup__btn mm-popup__btn--success mm-popup__box__footer__right-space',
+              action: () => {
+                // Get values directly from the DOM using more specific selectors
+                const popupElement = document.querySelector('.mm-popup__box');
+                const titleInput = popupElement ? popupElement.querySelector('.event-title-input-create') : null;
+                const locationInput = popupElement ? popupElement.querySelector('.event-location-input-create') : null;
+                
+                const event = {
+                  id: events.length + 1,
+                  title: titleInput ? titleInput.value : "",
+                  location: locationInput ? locationInput.value : "",
+                  start: initialEventData.start,
+                  end: initialEventData.end
+                };
+                
+                setEvents(prev => [...prev, event]);
+                Popup.close();
+              }
             }
-          },
-          {
-            text: 'Save',
-            className: 'mm-popup__btn mm-popup__btn--success mm-popup__box__footer__right-space',
-            action: () => {
-              // Get values directly from the DOM using more specific selectors
-              const popupElement = document.querySelector('.mm-popup__box');
-              const titleInput = popupElement ? popupElement.querySelector('.event-title-input-create') : null;
-              const locationInput = popupElement ? popupElement.querySelector('.event-location-input-create') : null;
-              
-              const event = {
-                id: events.length + 1,
-                title: titleInput ? titleInput.value : "",
-                location: locationInput ? locationInput.value : "",
-                start: initialEventData.start,
-                end: initialEventData.end
-              };
-              
-              setEvents(prev => [...prev, event]);
-              Popup.close();
-            }
-          }
-        ]
-      }
-    });
+          ]
+        }
+      });
+    }, 0);
   };
 
   // Handle event click to edit/delete
   const handleSelectEvent = (event) => {
-    // Close any existing popup first
+    // Close any existing popup first and wait a tick
     Popup.close();
     
-    // Show the popup using react-popup API
-    Popup.create({
-      title: 'Edit Event',
-      content: (
-        <div>
-          <input
-            type="text"
-            placeholder="Event Title"
-            name="title"
-            className="event-title-input-edit"
-            defaultValue={event.title}
-            style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-            data-testid="event-title-input-edit"
-          />
-          <input
-            type="text"
-            placeholder="Event Location"
-            name="location"
-            className="event-location-input-edit"
-            defaultValue={event.location}
-            style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-            data-testid="event-location-input-edit"
-          />
-        </div>
-      ),
-      buttons: {
-        left: [
-          {
-            text: 'Delete',
-            className: 'mm-popup__btn mm-popup__btn--danger',
-            action: () => {
-              setEvents(prev => prev.filter(e => e.id !== event.id));
-              Popup.close();
+    // Use setTimeout to ensure popup is fully cleared before creating new one
+    setTimeout(() => {
+      // Show the popup using react-popup API
+      Popup.create({
+        title: 'Edit Event',
+        content: (
+          <div>
+            <input
+              type="text"
+              placeholder="Event Title"
+              name="title"
+              className="event-title-input-edit"
+              defaultValue={event.title}
+              style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+            />
+            <input
+              type="text"
+              placeholder="Event Location"
+              name="location"
+              className="event-location-input-edit"
+              defaultValue={event.location}
+              style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+            />
+          </div>
+        ),
+        buttons: {
+          left: [
+            {
+              text: 'Delete',
+              className: 'mm-popup__btn mm-popup__btn--danger',
+              action: () => {
+                setEvents(prev => prev.filter(e => e.id !== event.id));
+                Popup.close();
+              }
             }
-          }
-        ],
-        right: [
-          {
-            text: 'Cancel',
-            className: 'mm-popup__btn mm-popup__btn--secondary',
-            action: () => {
-              Popup.close();
+          ],
+          right: [
+            {
+              text: 'Cancel',
+              className: 'mm-popup__btn mm-popup__btn--secondary',
+              action: () => {
+                Popup.close();
+              }
+            },
+            {
+              text: 'Save',
+              className: 'mm-popup__btn mm-popup__btn--success mm-popup__box__footer__right-space',
+              action: () => {
+                // Get values directly from the DOM using more specific selectors
+                const popupElement = document.querySelector('.mm-popup__box');
+                const titleInput = popupElement ? popupElement.querySelector('.event-title-input-edit') : null;
+                const locationInput = popupElement ? popupElement.querySelector('.event-location-input-edit') : null;
+                
+                setEvents(prev => 
+                  prev.map(e => 
+                    e.id === event.id 
+                      ? { ...e, title: titleInput ? titleInput.value : e.title, location: locationInput ? locationInput.value : e.location } 
+                      : e
+                  )
+                );
+                Popup.close();
+              }
             }
-          },
-          {
-            text: 'Save',
-            className: 'mm-popup__btn mm-popup__btn--success mm-popup__box__footer__right-space',
-            action: () => {
-              // Get values directly from the DOM using more specific selectors
-              const popupElement = document.querySelector('.mm-popup__box');
-              const titleInput = popupElement ? popupElement.querySelector('.event-title-input-edit') : null;
-              const locationInput = popupElement ? popupElement.querySelector('.event-location-input-edit') : null;
-              
-              setEvents(prev => 
-                prev.map(e => 
-                  e.id === event.id 
-                    ? { ...e, title: titleInput ? titleInput.value : e.title, location: locationInput ? locationInput.value : e.location } 
-                    : e
-                )
-              );
-              Popup.close();
-            }
-          }
-        ]
-      }
-    });
+          ]
+        }
+      });
+    }, 0);
   };
 
   // Filter events based on selection
