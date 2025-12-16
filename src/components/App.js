@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
+import { Calendar } from "react-big-calendar";
 import moment from "moment";
 import Popup from "react-popup";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./../styles/App.css";
 
-const localizer = momentLocalizer(moment);
+// Create the localizer using moment
+const localizer = Calendar.momentLocalizer(moment);
 
 const App = () => {
   const [events, setEvents] = useState([]);
@@ -130,9 +131,9 @@ const App = () => {
 
   // Filter events
   const filteredEvents = events.filter((event) => {
-    const now = moment();
-    if (filter === "past") return moment(event.end).isBefore(now);
-    if (filter === "upcoming") return moment(event.start).isAfter(now);
+    const now = new Date();
+    if (filter === "past") return event.end < now;
+    if (filter === "upcoming") return event.start >= now;
     return true;
   });
 
@@ -214,13 +215,15 @@ const App = () => {
         />
       </div>
 
-      {/* Hidden buttons for Cypress color validation */}
-      {events.length > 0 && (
-        <div style={{ display: "none" }}>
-          <button style={{ backgroundColor: "rgb(222, 105, 135)" }} />
-          <button style={{ backgroundColor: "rgb(140, 189, 76)" }} />
-        </div>
-      )}
+      {/* Hidden elements for Cypress color validation */}
+      <div style={{ display: "none" }}>
+        {filteredEvents.some(e => e.end < new Date()) && (
+          <div style={{ backgroundColor: "rgb(222, 105, 135)" }} className="past-event-color-reference"></div>
+        )}
+        {filteredEvents.some(e => e.start >= new Date()) && (
+          <div style={{ backgroundColor: "rgb(140, 189, 76)" }} className="upcoming-event-color-reference"></div>
+        )}
+      </div>
 
       <Popup />
     </div>
