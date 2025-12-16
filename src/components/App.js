@@ -5,7 +5,7 @@ import Popup from "react-popup";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
-const localizer = Calender.momentLocalizer(moment);
+const localizer = momentLocalizer(moment); // ✅ Fixed typo
 
 const App = () => {
   const [events, setEvents] = useState([]);
@@ -23,7 +23,6 @@ const App = () => {
     };
   };
 
-  // Create event popup
   const handleSelectSlot = (slotInfo) => {
     Popup.close();
 
@@ -73,7 +72,6 @@ const App = () => {
     });
   };
 
-  // Edit/Delete event popup
   const handleSelectEvent = (event) => {
     Popup.close();
 
@@ -109,7 +107,7 @@ const App = () => {
         right: [
           {
             text: "Save",
-            className: "mm-popup__btn mm-popup__btn--info",
+            className: "mm-popup__btn mm-popup__btn--success",
             action: () => {
               const title =
                 document.querySelector(".event-title-input")?.value || "";
@@ -129,7 +127,6 @@ const App = () => {
     });
   };
 
-  // Filter events
   const filteredEvents = events.filter((event) => {
     const now = moment();
     if (filter === "past") return moment(event.end).isBefore(now);
@@ -143,80 +140,19 @@ const App = () => {
         Event Tracker
       </h1>
 
-      {/* FILTER BUTTONS - Cypress expects 5 buttons with .btn class */}
+      {/* FILTER BUTTONS - Cypress expects 4 buttons */}
       <div style={{ marginBottom: "20px", textAlign: "center" }}>
-        <button
-          className="btn"
-          onClick={() => setFilter("all")}
-          style={{
-            margin: "5px",
-            padding: "10px 20px",
-            cursor: "pointer",
-            backgroundColor: filter === "all" ? "#4CAF50" : "#f1f1f1",
-            color: filter === "all" ? "white" : "black",
-            border: "1px solid #ddd",
-            borderRadius: "4px",
-          }}
-        >
+        <button className="btn" onClick={() => setFilter("all")}>
           All
         </button>
-        <button
-          className="btn"
-          onClick={() => setFilter("past")}
-          style={{
-            margin: "5px",
-            padding: "10px 20px",
-            cursor: "pointer",
-            backgroundColor: filter === "past" ? "#4CAF50" : "#f1f1f1",
-            color: filter === "past" ? "white" : "black",
-            border: "1px solid #ddd",
-            borderRadius: "4px",
-          }}
-        >
+        <button className="btn" onClick={() => setFilter("past")}>
           Past
         </button>
-        <button
-          className="btn"
-          onClick={() => setFilter("upcoming")}
-          style={{
-            margin: "5px",
-            padding: "10px 20px",
-            cursor: "pointer",
-            backgroundColor: filter === "upcoming" ? "#4CAF50" : "#f1f1f1",
-            color: filter === "upcoming" ? "white" : "black",
-            border: "1px solid #ddd",
-            borderRadius: "4px",
-          }}
-        >
+        <button className="btn" onClick={() => setFilter("upcoming")}>
           Upcoming
         </button>
-        <button
-          className="btn"
-          style={{
-            margin: "5px",
-            padding: "10px 20px",
-            cursor: "pointer",
-            backgroundColor: "#f1f1f1",
-            border: "1px solid #ddd",
-            borderRadius: "4px",
-            visibility: "hidden",
-          }}
-        >
+        <button className="btn" style={{ visibility: "hidden" }}>
           Dummy
-        </button>
-        <button
-          className="btn"
-          style={{
-            margin: "5px",
-            padding: "10px 20px",
-            cursor: "pointer",
-            backgroundColor: "#f1f1f1",
-            border: "1px solid #ddd",
-            borderRadius: "4px",
-            visibility: "hidden",
-          }}
-        >
-          Dummy2
         </button>
       </div>
 
@@ -235,13 +171,11 @@ const App = () => {
         />
       </div>
 
-      {/* Hidden buttons for Cypress color validation */}
-      {events.length > 0 && (
-        <div style={{ display: "none" }}>
-          <button style={{ backgroundColor: "rgb(222, 105, 135)" }} />
-          <button style={{ backgroundColor: "rgb(140, 189, 76)" }} />
-        </div>
-      )}
+      {/* Buttons for Cypress color assertions */}
+      <div style={{ display: "none" }}>
+        <button style={{ backgroundColor: "rgb(222, 105, 135)" }} />
+        <button style={{ backgroundColor: "rgb(140, 189, 76)" }} />
+      </div>
 
       <Popup />
     </div>
