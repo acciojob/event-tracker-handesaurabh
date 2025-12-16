@@ -12,6 +12,102 @@ const localizer = Calendar.momentLocalizer(moment);
 const App = () => {
   const [events, setEvents] = useState([]);
   const [filter, setFilter] = useState("all");
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupType, setPopupType] = useState(""); // "create" or "edit"
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [newEvent, setNewEvent] = useState({
+    title: "",
+    location: "",
+    start: new Date(),
+    end: new Date()
+  });
+
+  // Filter events based on selection
+  const filteredEvents = events.filter(event => {
+    const now = new Date();
+    if (filter === "past") {
+      return event.end < now;
+    } else if (filter === "upcoming") {
+      return event.start >= now;
+    }
+    return true;
+  });
+
+  // Handle date click to create event
+  const handleSelectSlot = (slotInfo) => {
+    setNewEvent({
+      title: "",
+      location: "",
+      start: slotInfo.start,
+      end: slotInfo.end
+    });
+    setPopupType("create");
+    setSelectedEvent(null);
+    setShowPopup(true);
+  };
+
+  // Handle event click to edit/delete
+  const handleSelectEvent = (event) => {
+    setSelectedEvent(event);
+    setNewEvent({
+      title: event.title,
+      location: event.location,
+      start: event.start,
+      end: event.end
+    });
+    setPopupType("edit");
+    setShowPopup(true);
+  };
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewEvent(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Save new event
+  const handleSaveEvent = () => {
+    if (popupType === "create") {
+      const event = {
+        id: events.length + 1,
+        title: newEvent.title,
+        location: newEvent.location,
+        start: newEvent.start,
+        end: newEvent.end
+      };
+      setEvents(prev => [...prev, event]);
+    } else if (popupType === "edit" && selectedEvent) {
+      setEvents(prev => 
+        prev.map(event => 
+          event.id === selectedEvent.id 
+            ? { ...event, title: newEvent.title, location: newEvent.location } 
+            : event
+        )
+      );
+    }
+    setShowPopup(false);
+    setNewEvent({ title: "", location: "", start: new Date(), end: new Date() });
+    setSelectedEvent(null);
+  };
+
+  // Delete event
+  const handleDeleteEvent = () => {
+    if (selectedEvent) {
+      setEvents(prev => prev.filter(event => event.id !== selectedEvent.id));
+      setShowPopup(false);
+      setSelectedEvent(null);
+    }
+  };
+
+  // Close popup
+  const handleClosePopup = () => {
+    setShowPopup(false);
+    setNewEvent({ title: "", location: "", start: new Date(), end: new Date() });
+    setSelectedEvent(null);
+  };
 
   // Set event style based on past/upcoming
   const eventStyleGetter = (event) => {
@@ -26,166 +122,6 @@ const App = () => {
       }
     };
   };
-
-  // Handle date click to create event
-  const handleSelectSlot = (slotInfo) => {
-    // Close any existing popup first and wait a tick
-    Popup.close();
-    
-    // Use setTimeout to ensure popup is fully cleared before creating new one
-    setTimeout(() => {
-      // Create initial event data
-      const initialEventData = {
-        title: "",
-        location: "",
-        start: slotInfo.start,
-        end: slotInfo.end
-      };
-      
-      // Show the popup using react-popup API
-      Popup.create({
-        title: 'Create Event',
-        content: (
-          <div>
-            <input
-              type="text"
-              placeholder="Event Title"
-              name="title"
-              className="event-title-input-create"
-              defaultValue={initialEventData.title}
-              style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-            />
-            <input
-              type="text"
-              placeholder="Event Location"
-              name="location"
-              className="event-location-input-create"
-              defaultValue={initialEventData.location}
-              style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-            />
-          </div>
-        ),
-        buttons: {
-          left: [],
-          right: [
-            {
-              text: 'Cancel',
-              className: 'mm-popup__btn mm-popup__btn--secondary',
-              action: () => {
-                Popup.close();
-              }
-            },
-            {
-              text: 'Save',
-              className: 'mm-popup__btn mm-popup__btn--success mm-popup__box__footer__right-space',
-              action: () => {
-                // Get values directly from the DOM using more specific selectors
-                const popupElement = document.querySelector('.mm-popup__box');
-                const titleInput = popupElement ? popupElement.querySelector('.event-title-input-create') : null;
-                const locationInput = popupElement ? popupElement.querySelector('.event-location-input-create') : null;
-                
-                const event = {
-                  id: events.length + 1,
-                  title: titleInput ? titleInput.value : "",
-                  location: locationInput ? locationInput.value : "",
-                  start: initialEventData.start,
-                  end: initialEventData.end
-                };
-                
-                setEvents(prev => [...prev, event]);
-                Popup.close();
-              }
-            }
-          ]
-        }
-      });
-    }, 0);
-  };
-
-  // Handle event click to edit/delete
-  const handleSelectEvent = (event) => {
-    // Close any existing popup first and wait a tick
-    Popup.close();
-    
-    // Use setTimeout to ensure popup is fully cleared before creating new one
-    setTimeout(() => {
-      // Show the popup using react-popup API
-      Popup.create({
-        title: 'Edit Event',
-        content: (
-          <div>
-            <input
-              type="text"
-              placeholder="Event Title"
-              name="title"
-              className="event-title-input-edit"
-              defaultValue={event.title}
-              style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-            />
-            <input
-              type="text"
-              placeholder="Event Location"
-              name="location"
-              className="event-location-input-edit"
-              defaultValue={event.location}
-              style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-            />
-          </div>
-        ),
-        buttons: {
-          left: [
-            {
-              text: 'Delete',
-              className: 'mm-popup__btn mm-popup__btn--danger',
-              action: () => {
-                setEvents(prev => prev.filter(e => e.id !== event.id));
-                Popup.close();
-              }
-            }
-          ],
-          right: [
-            {
-              text: 'Cancel',
-              className: 'mm-popup__btn mm-popup__btn--secondary',
-              action: () => {
-                Popup.close();
-              }
-            },
-            {
-              text: 'Save',
-              className: 'mm-popup__btn mm-popup__btn--success mm-popup__box__footer__right-space',
-              action: () => {
-                // Get values directly from the DOM using more specific selectors
-                const popupElement = document.querySelector('.mm-popup__box');
-                const titleInput = popupElement ? popupElement.querySelector('.event-title-input-edit') : null;
-                const locationInput = popupElement ? popupElement.querySelector('.event-location-input-edit') : null;
-                
-                setEvents(prev => 
-                  prev.map(e => 
-                    e.id === event.id 
-                      ? { ...e, title: titleInput ? titleInput.value : e.title, location: locationInput ? locationInput.value : e.location } 
-                      : e
-                  )
-                );
-                Popup.close();
-              }
-            }
-          ]
-        }
-      });
-    }, 0);
-  };
-
-  // Filter events based on selection
-  const filteredEvents = events.filter(event => {
-    const now = new Date();
-    if (filter === "past") {
-      return event.end < now;
-    } else if (filter === "upcoming") {
-      return event.start >= now;
-    }
-    return true;
-  });
 
   return (
     <div>
@@ -214,7 +150,122 @@ const App = () => {
         />
       </div>
       
-      {/* Render the Popup component globally */}
+      {/* Popup for Create/Edit Event */}
+      {showPopup && (
+        <div className="popup-overlay" style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1000
+        }}>
+          <div className="popup-content" style={{
+            backgroundColor: 'white',
+            padding: '20px',
+            borderRadius: '5px',
+            minWidth: '300px'
+          }}>
+            <div className="popup-header" style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '15px'
+            }}>
+              <h3>{popupType === "create" ? "Create Event" : "Edit Event"}</h3>
+              <button 
+                onClick={handleClosePopup}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '20px',
+                  cursor: 'pointer'
+                }}
+              >&times;</button>
+            </div>
+            <div className="popup-body" style={{ marginBottom: '15px' }}>
+              <input
+                type="text"
+                placeholder="Event Title"
+                name="title"
+                value={newEvent.title}
+                onChange={handleInputChange}
+                className="event-title-input"
+                style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+              />
+              <input
+                type="text"
+                placeholder="Event Location"
+                name="location"
+                value={newEvent.location}
+                onChange={handleInputChange}
+                className="event-location-input"
+                style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+              />
+            </div>
+            <div className="popup-footer" style={{
+              display: 'flex',
+              justifyContent: 'space-between'
+            }}>
+              <div>
+                {popupType === "edit" && (
+                  <button 
+                    className="delete-btn"
+                    onClick={handleDeleteEvent}
+                    style={{
+                      backgroundColor: '#dc3545',
+                      color: 'white',
+                      border: 'none',
+                      padding: '5px 10px',
+                      borderRadius: '3px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Delete
+                  </button>
+                )}
+              </div>
+              <div>
+                <button 
+                  className="cancel-btn"
+                  onClick={handleClosePopup}
+                  style={{
+                    backgroundColor: '#6c757d',
+                    color: 'white',
+                    border: 'none',
+                    padding: '5px 10px',
+                    borderRadius: '3px',
+                    cursor: 'pointer',
+                    marginRight: '5px'
+                  }}
+                >
+                  Cancel
+                </button>
+                <button 
+                  className="save-btn"
+                  onClick={handleSaveEvent}
+                  style={{
+                    backgroundColor: '#28a745',
+                    color: 'white',
+                    border: 'none',
+                    padding: '5px 10px',
+                    borderRadius: '3px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Render the Popup component globally for react-popup API usage */}
       <Popup />
     </div>
   );
