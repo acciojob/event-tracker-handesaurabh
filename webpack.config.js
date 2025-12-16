@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin= require('html-webpack-plugin');
+
 module.exports = {
     entry: './src/index.js',
 
@@ -36,5 +37,10 @@ module.exports = {
     ],
     resolve: {
         extensions: ['.js', '.jsx'],
+    },
+    // Add this to fix Node.js compatibility issues
+    node: {
+        crypto: 'empty',
+        stream: 'empty'
     }
 };
