@@ -142,12 +142,13 @@ const App = () => {
     <div>
       <h1>Event Tracker</h1>
 
-      {/* FILTER BUTTONS (Cypress needs 4 buttons) */}
+     {/* FILTER BUTTONS (Cypress needs 5 buttons) */}
       <div style={{ marginBottom: "20px", padding: "20px" }}>
         <div><button className="btn" onClick={() => setFilter("all")}>All</button></div>
         <div><button className="btn" onClick={() => setFilter("past")}>Past</button></div>
         <div><button className="btn" onClick={() => setFilter("upcoming")}>Upcoming</button></div>
         <div><button className="btn">Dummy</button></div>
+        <div><button className="btn">Dummy 2</button></div>
       </div>
 
       {/* Calendar */}
