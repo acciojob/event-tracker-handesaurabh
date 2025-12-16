@@ -5,7 +5,7 @@ import Popup from "react-popup";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
-const localizer = momentLocalizer(moment);
+const localizer = Calender.momentLocalizer(moment);
 
 const App = () => {
   const [events, setEvents] = useState([]);
