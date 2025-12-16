@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // Import the Calendar component and then access momentLocalizer as its property
 import Calendar from "react-big-calendar";
 import moment from "moment";
@@ -12,8 +12,6 @@ const localizer = Calendar.momentLocalizer(moment);
 const App = () => {
   const [events, setEvents] = useState([]);
   const [filter, setFilter] = useState("all");
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [popupType, setPopupType] = useState(""); // "create" or "edit"
   const [newEvent, setNewEvent] = useState({
     title: "",
     location: "",
@@ -34,14 +32,15 @@ const App = () => {
 
   // Handle date click to create event
   const handleSelectSlot = (slotInfo) => {
+    // Close any existing popup first
+    Popup.close();
+    
     setNewEvent({
       title: "",
       location: "",
       start: slotInfo.start,
       end: slotInfo.end
     });
-    setPopupType("create");
-    setSelectedEvent(null);
     
     // Show the popup using react-popup API
     Popup.create({
@@ -52,6 +51,7 @@ const App = () => {
             type="text"
             placeholder="Event Title"
             name="title"
+            className="event-title-input"
             value={newEvent.title}
             onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}
             style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
@@ -60,6 +60,7 @@ const App = () => {
             type="text"
             placeholder="Event Location"
             name="location"
+            className="event-location-input"
             value={newEvent.location}
             onChange={(e) => setNewEvent({...newEvent, location: e.target.value})}
             style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
@@ -99,14 +100,15 @@ const App = () => {
 
   // Handle event click to edit/delete
   const handleSelectEvent = (event) => {
-    setSelectedEvent(event);
+    // Close any existing popup first
+    Popup.close();
+    
     setNewEvent({
       title: event.title,
       location: event.location,
       start: event.start,
       end: event.end
     });
-    setPopupType("edit");
     
     // Show the popup using react-popup API
     Popup.create({
@@ -117,6 +119,7 @@ const App = () => {
             type="text"
             placeholder="Event Title"
             name="title"
+            className="event-title-input"
             value={newEvent.title}
             onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}
             style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
@@ -125,6 +128,7 @@ const App = () => {
             type="text"
             placeholder="Event Location"
             name="location"
+            className="event-location-input"
             value={newEvent.location}
             onChange={(e) => setNewEvent({...newEvent, location: e.target.value})}
             style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
@@ -139,7 +143,6 @@ const App = () => {
             action: () => {
               setEvents(prev => prev.filter(e => e.id !== event.id));
               Popup.close();
-              setSelectedEvent(null);
               setNewEvent({ title: "", location: "", start: new Date(), end: new Date() });
             }
           }
@@ -164,7 +167,6 @@ const App = () => {
                 )
               );
               Popup.close();
-              setSelectedEvent(null);
               setNewEvent({ title: "", location: "", start: new Date(), end: new Date() });
             }
           }
