@@ -12,6 +12,8 @@ const localizer = Calendar.momentLocalizer(moment);
 const App = () => {
   const [events, setEvents] = useState([]);
   const [filter, setFilter] = useState("all");
+  // Add a counter for generating unique IDs
+  const [nextId, setNextId] = useState(1);
 
   // Set event style based on past/upcoming
   const eventStyleGetter = (event) => {
@@ -80,7 +82,7 @@ const App = () => {
               const locationInput = document.querySelector('.event-location-input');
               
               const event = {
-                id: events.length + 1,
+                id: nextId,  // Use the nextId instead of events.length + 1
                 title: titleInput ? titleInput.value : "",
                 location: locationInput ? locationInput.value : "",
                 start: initialEventData.start,
@@ -88,6 +90,7 @@ const App = () => {
               };
               
               setEvents(prev => [...prev, event]);
+              setNextId(prev => prev + 1);  // Increment the nextId
               Popup.close();
             }
           }
