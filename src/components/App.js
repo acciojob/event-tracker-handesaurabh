@@ -52,7 +52,7 @@ const App = () => {
             className="event-title-input-create"
             defaultValue={initialEventData.title}
             style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-            data-testid="event-title-input"
+            data-testid="event-title-input-create"
           />
           <input
             type="text"
@@ -61,7 +61,7 @@ const App = () => {
             className="event-location-input-create"
             defaultValue={initialEventData.location}
             style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-            data-testid="event-location-input"
+            data-testid="event-location-input-create"
           />
         </div>
       ),
@@ -118,7 +118,7 @@ const App = () => {
             className="event-title-input-edit"
             defaultValue={event.title}
             style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-            data-testid="event-title-input"
+            data-testid="event-title-input-edit"
           />
           <input
             type="text"
@@ -127,7 +127,7 @@ const App = () => {
             className="event-location-input-edit"
             defaultValue={event.location}
             style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-            data-testid="event-location-input"
+            data-testid="event-location-input-edit"
           />
         </div>
       ),
