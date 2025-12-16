@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Calendar from "react-big-calendar";
+import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import Popup from "react-popup";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
-const localizer = Calendar.momentLocalizer(moment);
+const localizer = momentLocalizer(moment);
 
 const App = () => {
   const [events, setEvents] = useState([]);
