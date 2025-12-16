@@ -12,6 +12,9 @@ const localizer = Calendar.momentLocalizer(moment);
 const App = () => {
   const [events, setEvents] = useState([]);
   const [filter, setFilter] = useState("all");
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupType, setPopupType] = useState(""); // "create" or "edit"
   const [newEvent, setNewEvent] = useState({
     title: "",
     location: "",
@@ -32,147 +35,77 @@ const App = () => {
 
   // Handle date click to create event
   const handleSelectSlot = (slotInfo) => {
-    // Close any existing popup first
-    Popup.close();
-    
     setNewEvent({
       title: "",
       location: "",
       start: slotInfo.start,
       end: slotInfo.end
     });
-    
-    // Show the popup using react-popup API
-    Popup.create({
-      title: 'Create Event',
-      content: (
-        <div>
-          <input
-            type="text"
-            placeholder="Event Title"
-            name="title"
-            className="event-title-input"
-            value={newEvent.title}
-            onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}
-            style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-          />
-          <input
-            type="text"
-            placeholder="Event Location"
-            name="location"
-            className="event-location-input"
-            value={newEvent.location}
-            onChange={(e) => setNewEvent({...newEvent, location: e.target.value})}
-            style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-          />
-        </div>
-      ),
-      buttons: {
-        left: [],
-        right: [
-          {
-            text: 'Cancel',
-            className: 'mm-popup__btn mm-popup__btn--secondary',
-            action: () => {
-              Popup.close();
-            }
-          },
-          {
-            text: 'Save',
-            className: 'mm-popup__btn mm-popup__btn--success mm-popup__box__footer__right-space',
-            action: () => {
-              const event = {
-                id: events.length + 1,
-                title: newEvent.title,
-                location: newEvent.location,
-                start: newEvent.start,
-                end: newEvent.end
-              };
-              setEvents(prev => [...prev, event]);
-              Popup.close();
-              setNewEvent({ title: "", location: "", start: new Date(), end: new Date() });
-            }
-          }
-        ]
-      }
-    });
+    setPopupType("create");
+    setShowPopup(true);
   };
 
   // Handle event click to edit/delete
   const handleSelectEvent = (event) => {
-    // Close any existing popup first
-    Popup.close();
-    
+    setSelectedEvent(event);
     setNewEvent({
       title: event.title,
       location: event.location,
       start: event.start,
       end: event.end
     });
-    
-    // Show the popup using react-popup API
-    Popup.create({
-      title: 'Edit Event',
-      content: (
-        <div>
-          <input
-            type="text"
-            placeholder="Event Title"
-            name="title"
-            className="event-title-input"
-            value={newEvent.title}
-            onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}
-            style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-          />
-          <input
-            type="text"
-            placeholder="Event Location"
-            name="location"
-            className="event-location-input"
-            value={newEvent.location}
-            onChange={(e) => setNewEvent({...newEvent, location: e.target.value})}
-            style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-          />
-        </div>
-      ),
-      buttons: {
-        left: [
-          {
-            text: 'Delete',
-            className: 'mm-popup__btn mm-popup__btn--danger',
-            action: () => {
-              setEvents(prev => prev.filter(e => e.id !== event.id));
-              Popup.close();
-              setNewEvent({ title: "", location: "", start: new Date(), end: new Date() });
-            }
-          }
-        ],
-        right: [
-          {
-            text: 'Cancel',
-            className: 'mm-popup__btn mm-popup__btn--secondary',
-            action: () => {
-              Popup.close();
-            }
-          },
-          {
-            text: 'Save',
-            className: 'mm-popup__btn mm-popup__btn--success mm-popup__box__footer__right-space',
-            action: () => {
-              setEvents(prev => 
-                prev.map(e => 
-                  e.id === event.id 
-                    ? { ...e, title: newEvent.title, location: newEvent.location } 
-                    : e
-                )
-              );
-              Popup.close();
-              setNewEvent({ title: "", location: "", start: new Date(), end: new Date() });
-            }
-          }
-        ]
-      }
-    });
+    setPopupType("edit");
+    setShowPopup(true);
+  };
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewEvent(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Save new event
+  const handleSaveEvent = () => {
+    if (popupType === "create") {
+      const event = {
+        id: events.length + 1,
+        title: newEvent.title,
+        location: newEvent.location,
+        start: newEvent.start,
+        end: newEvent.end
+      };
+      setEvents(prev => [...prev, event]);
+    } else if (popupType === "edit" && selectedEvent) {
+      setEvents(prev => 
+        prev.map(event => 
+          event.id === selectedEvent.id 
+            ? { ...event, title: newEvent.title, location: newEvent.location } 
+            : event
+        )
+      );
+    }
+    setShowPopup(false);
+    setNewEvent({ title: "", location: "", start: new Date(), end: new Date() });
+    setSelectedEvent(null);
+  };
+
+  // Delete event
+  const handleDeleteEvent = () => {
+    if (selectedEvent) {
+      setEvents(prev => prev.filter(event => event.id !== selectedEvent.id));
+      setShowPopup(false);
+      setSelectedEvent(null);
+    }
+  };
+
+  // Close popup
+  const handleClosePopup = () => {
+    setShowPopup(false);
+    setNewEvent({ title: "", location: "", start: new Date(), end: new Date() });
+    setSelectedEvent(null);
   };
 
   // Set event style based on past/upcoming
@@ -191,15 +124,15 @@ const App = () => {
 
   return (
     <div>
-      {/* Do not remove the main div */}
+      {/* Main div */}
       <div style={{ padding: "20px" }}>
         <h1>Event Tracker</h1>
         
         {/* Filter Buttons */}
         <div style={{ marginBottom: "20px" }}>
-          <button className="btn" onClick={() => setFilter("all")}>All</button>
-          <button className="btn" onClick={() => setFilter("past")}>Past</button>
-          <button className="btn" onClick={() => setFilter("upcoming")}>Upcoming</button>
+          <button id="all-events" className="btn" onClick={() => setFilter("all")}>All</button>
+          <button id="past-events" className="btn" onClick={() => setFilter("past")}>Past</button>
+          <button id="upcoming-events" className="btn" onClick={() => setFilter("upcoming")}>Upcoming</button>
         </div>
         
         {/* Calendar */}
@@ -216,8 +149,64 @@ const App = () => {
         />
       </div>
       
-      {/* Render the Popup component globally */}
-      <Popup />
+      {/* Popup for Create/Edit Event */}
+      {showPopup && (
+        <Popup
+          open={showPopup}
+          closeOnDocumentClick
+          onClose={handleClosePopup}
+        >
+          <div className="mm-popup__box">
+            <div className="mm-popup__box__header">
+              {popupType === "create" ? "Create Event" : "Edit Event"}
+            </div>
+            <div className="mm-popup__box__body">
+              <input
+                type="text"
+                placeholder="Event Title"
+                name="title"
+                value={newEvent.title}
+                onChange={handleInputChange}
+                style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+              />
+              <input
+                type="text"
+                placeholder="Event Location"
+                name="location"
+                value={newEvent.location}
+                onChange={handleInputChange}
+                style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+              />
+            </div>
+            <div className="mm-popup__box__footer">
+              <div className="mm-popup__box__footer__left">
+                {popupType === "edit" && (
+                  <button 
+                    className="mm-popup__btn mm-popup__btn--danger"
+                    onClick={handleDeleteEvent}
+                  >
+                    Delete
+                  </button>
+                )}
+              </div>
+              <div className="mm-popup__box__footer__right">
+                <button 
+                  className="mm-popup__btn mm-popup__btn--secondary"
+                  onClick={handleClosePopup}
+                >
+                  Cancel
+                </button>
+                <button 
+                  className="mm-popup__btn mm-popup__btn--success mm-popup__box__footer__right-space"
+                  onClick={handleSaveEvent}
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </Popup>
+      )}
     </div>
   );
 };
