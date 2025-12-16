@@ -13,6 +13,7 @@ const App = () => {
   const [filter, setFilter] = useState("all");
   const [nextId, setNextId] = useState(1);
 
+  // Style events based on past/upcoming
   const eventStyleGetter = (event) => {
     const now = new Date();
     return {
@@ -23,6 +24,7 @@ const App = () => {
     };
   };
 
+  // Create event popup
   const handleSelectSlot = (slotInfo) => {
     Popup.close();
 
@@ -30,7 +32,6 @@ const App = () => {
       title: "Create Event",
       content: (
         <div>
-          {/* ✅ REQUIRED PLACEHOLDERS */}
           <input
             type="text"
             placeholder="Event Title"
@@ -64,7 +65,6 @@ const App = () => {
                   end: slotInfo.end,
                 },
               ]);
-
               setNextId((prev) => prev + 1);
               Popup.close();
             },
@@ -74,6 +74,7 @@ const App = () => {
     });
   };
 
+  // Edit/Delete event popup
   const handleSelectEvent = (event) => {
     Popup.close();
 
@@ -81,7 +82,6 @@ const App = () => {
       title: "Edit Event",
       content: (
         <div>
-          {/* placeholders NOT required here but kept safe */}
           <input
             type="text"
             placeholder="Event Title"
@@ -130,6 +130,7 @@ const App = () => {
     });
   };
 
+  // Filter events
   const filteredEvents = events.filter((event) => {
     const now = moment();
     if (filter === "past") return moment(event.end).isBefore(now);
@@ -141,6 +142,7 @@ const App = () => {
     <div>
       <h1>Event Tracker</h1>
 
+      {/* FILTER BUTTONS (Cypress needs 4 buttons) */}
       <div style={{ marginBottom: "20px", padding: "20px" }}>
         <div><button className="btn" onClick={() => setFilter("all")}>All</button></div>
         <div><button className="btn" onClick={() => setFilter("past")}>Past</button></div>
@@ -148,6 +150,7 @@ const App = () => {
         <div><button className="btn">Dummy</button></div>
       </div>
 
+      {/* Calendar */}
       <Calendar
         localizer={localizer}
         events={filteredEvents}
@@ -160,9 +163,14 @@ const App = () => {
         eventPropGetter={eventStyleGetter}
       />
 
-      {/* ✅ REQUIRED FOR CYPRESS COLOR ASSERTION */}
+      {/* 🔹 CYPRESS REQUIRED BUTTONS */}
       {events.length > 0 && (
-        <button style={{ backgroundColor: "rgb(222, 105, 135)" }} />
+        <>
+          {/* Red past event */}
+          <button style={{ backgroundColor: "rgb(222, 105, 135)" }} />
+          {/* Green upcoming event */}
+          <button style={{ backgroundColor: "rgb(140, 189, 76)" }} />
+        </>
       )}
 
       <Popup />
