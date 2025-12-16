@@ -1,12 +1,13 @@
 import React, { useState } from "react";
+// Import the Calendar component and then access momentLocalizer as its property
+import Calendar from "react-big-calendar";
 import moment from "moment";
-import { Calendar, momentLocalizer } from "react-big-calendar";
 import Popup from "react-popup";
-
+import './../styles/App.css';
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import "./styles/App.css";
 
-const localizer = momentLocalizer(moment);
+// Create the localizer using the Calendar component's momentLocalizer property
+const localizer = Calendar.momentLocalizer(moment);
 
 const App = () => {
   const [events, setEvents] = useState([]);
@@ -135,7 +136,7 @@ const App = () => {
         </div>
         
         {/* Calendar */}
-        <BigCalendar.Calendar
+        <Calendar
           localizer={localizer}
           events={filteredEvents}
           startAccessor="start"
