@@ -193,12 +193,14 @@ const App = () => {
                 >
                   Cancel
                 </button>
-                <button 
-                  className="mm-popup__btn mm-popup__btn--success mm-popup__box__footer__right-space"
-                  onClick={handleSaveEvent}
-                >
-                  Save
-                </button>
+                <div className="mm-popup__box__footer__right-space">
+                  <button 
+                    className="mm-popup__btn mm-popup__btn--success"
+                    onClick={handleSaveEvent}
+                  >
+                    Save
+                  </button>
+                </div>
               </div>
             </div>
           </div>

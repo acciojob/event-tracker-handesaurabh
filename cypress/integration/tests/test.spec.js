@@ -11,11 +11,11 @@ describe('Calendar App', () => {
     cy.get('.mm-popup-overlay').should('be.visible');
     
     // Fill in event details
-    cy.get('input[name="title"]').type('Test Event');
-    cy.get('input[name="location"]').type('Test Location');
+    cy.get('input[placeholder="Event Title"]').type('Test Event');
+    cy.get('input[placeholder="Event Location"]').type('Test Location');
     
-    // Click save button
-    cy.get('.mm-popup__btn--success').click();
+    // Click save button - using the specific selector from the error
+    cy.get('.mm-popup__box__footer__right-space > .mm-popup__btn').click();
     
     // Verify event was added
     cy.contains('Test Event').should('be.visible');
