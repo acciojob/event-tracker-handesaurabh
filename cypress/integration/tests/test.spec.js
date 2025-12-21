@@ -25,16 +25,16 @@ describe('Calendar App', () => {
     // Create an event first
     cy.get('.rbc-day-bg').first().click();
     cy.get('.mm-popup-overlay').should('be.visible');
-    cy.get('input[name="title"]').type('Original Event');
-    cy.get('input[name="location"]').type('Original Location');
+    cy.get('input[placeholder="Event Title"]').type('Original Event');
+    cy.get('input[placeholder="Event Location"]').type('Original Location');
     cy.get('.mm-popup__btn--success').click();
     
     // Click on the event to edit it
     cy.contains('Original Event').click();
     
     // Edit the event
-    cy.get('input[name="title"]').clear().type('Updated Event');
-    cy.get('input[name="location"]').clear().type('Updated Location');
+    cy.get('input[placeholder="Event Title"]').clear().type('Updated Event');
+    cy.get('input[placeholder="Event Location"]').clear().type('Updated Location');
     cy.get('.mm-popup__btn--success').click();
     
     // Verify event was updated
@@ -45,8 +45,8 @@ describe('Calendar App', () => {
     // Create an event first
     cy.get('.rbc-day-bg').eq(5).click(); // Click on a different date
     cy.get('.mm-popup-overlay').should('be.visible');
-    cy.get('input[name="title"]').type('Event to Delete');
-    cy.get('input[name="location"]').type('Delete Location');
+    cy.get('input[placeholder="Event Title"]').type('Event to Delete');
+    cy.get('input[placeholder="Event Location"]').type('Delete Location');
     cy.get('.mm-popup__btn--success').click();
     
     // Click on the event to delete it
