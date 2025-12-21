@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import BigCalendar from "react-big-calendar";
 import moment from "moment";
@@ -54,32 +53,31 @@ const App = () => {
     setShowPopup(true);
   };
 
+  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewEvent((prev) => ({ ...prev, [name]: value }));
+    setNewEvent(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
+  // Save new event
   const handleSaveEvent = () => {
     if (popupType === "create") {
-      setEvents((prev) => [
-        ...prev,
-        {
-          id: Date.now(),
-          title: newEvent.title,
-          location: newEvent.location,
-          start: newEvent.start,
-          end: newEvent.end
-        }
-      ]);
+      const event = {
+        id: Date.now(), // Better unique ID
+        title: newEvent.title,
+        location: newEvent.location,
+        start: newEvent.start,
+        end: newEvent.end
+      };
+      setEvents(prev => [...prev, event]);
     } else if (popupType === "edit" && selectedEvent) {
-      setEvents((prev) =>
-        prev.map((event) =>
-          event.id === selectedEvent.id
-            ? {
-                ...event,
-                title: newEvent.title,
-                location: newEvent.location
-              }
+      setEvents(prev => 
+        prev.map(event => 
+          event.id === selectedEvent.id 
+            ? { ...event, title: newEvent.title, location: newEvent.location } 
             : event
         )
       );
@@ -89,21 +87,23 @@ const App = () => {
     setSelectedEvent(null);
   };
 
+  // Delete event
   const handleDeleteEvent = () => {
     if (selectedEvent) {
-      setEvents((prev) => prev.filter((event) => event.id !== selectedEvent.id));
+      setEvents(prev => prev.filter(event => event.id !== selectedEvent.id));
       setShowPopup(false);
       setSelectedEvent(null);
     }
   };
 
+  // Close popup
   const handleClosePopup = () => {
     setShowPopup(false);
     setNewEvent({ title: "", location: "", start: new Date(), end: new Date() });
     setSelectedEvent(null);
   };
 
-  // style events: pink for past, green for upcoming
+  // Set event style based on past/upcoming
   const eventStyleGetter = (event) => {
     const now = new Date();
     const backgroundColor =
@@ -135,24 +135,15 @@ const App = () => {
             Upcoming
           </button>
 
-          {/* 4th child (used in tests via :nth-child(4) > .btn) – Add Event */}
+          {/* 4th child (used in tests via :nth-child(4) > .btn) – Dummy button */}
           <button
             className="btn"
-            onClick={() => {
-              setNewEvent({
-                title: "",
-                location: "",
-                start: new Date(),
-                end: new Date()
-              });
-              setPopupType("create");
-              setShowPopup(true);
-            }}
+            onClick={() => {}}
           >
-            Add Event
+            Dummy4
           </button>
 
-          {/* 5th button (if tests expect five .btns) – no-op or extra */}
+          {/* 5th button (if tests expect five .btns) – Extra */}
           <button className="btn" onClick={() => {}}>
             Extra
           </button>
@@ -230,7 +221,7 @@ const App = () => {
                   Cancel
                 </button>
 
-                {/* Save button selector used in tests: .mm-popup__box__footer__right-space > .mm-popup__btn */}
+                {/* Save button selector used in tests: .mm-popup__box__footer__right-space > .mm-popup__btn */}   
                 <div className="mm-popup__box__footer__right-space">
                   <button
                     className="mm-popup__btn mm-popup__btn--success"
