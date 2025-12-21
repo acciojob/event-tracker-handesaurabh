@@ -123,6 +123,8 @@ const App = () => {
           <button className="btn" onClick={() => setFilter("upcoming")}>
             Upcoming
           </button>
+              <button className="btn" onClick={() => {}}>Extra 1</button>
+  <button className="btn" onClick={() => {}}>Extra 2</button>
         </div>
 
         {/* Calendar – for v0.20.1 you still use <BigCalendar /> */}
