@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
-import './../styles/App.css';
+import "./../styles/App.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 const localizer = momentLocalizer(moment);
@@ -20,7 +20,7 @@ const App = () => {
   });
 
   // Filter events based on selection
-  const filteredEvents = events.filter(event => {
+  const filteredEvents = events.filter((event) => {
     const now = new Date();
     if (filter === "past") {
       return event.end < now;
@@ -58,13 +58,13 @@ const App = () => {
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewEvent(prev => ({
+    setNewEvent((prev) => ({
       ...prev,
       [name]: value
     }));
   };
 
-  // Save new event
+  // Save new or edited event
   const handleSaveEvent = () => {
     if (popupType === "create") {
       const event = {
@@ -74,12 +74,16 @@ const App = () => {
         start: newEvent.start,
         end: newEvent.end
       };
-      setEvents(prev => [...prev, event]);
+      setEvents((prev) => [...prev, event]);
     } else if (popupType === "edit" && selectedEvent) {
-      setEvents(prev => 
-        prev.map(event => 
-          event.id === selectedEvent.id 
-            ? { ...event, title: newEvent.title, location: newEvent.location } 
+      setEvents((prev) =>
+        prev.map((event) =>
+          event.id === selectedEvent.id
+            ? {
+                ...event,
+                title: newEvent.title,
+                location: newEvent.location
+              }
             : event
         )
       );
@@ -92,7 +96,7 @@ const App = () => {
   // Delete event
   const handleDeleteEvent = () => {
     if (selectedEvent) {
-      setEvents(prev => prev.filter(event => event.id !== selectedEvent.id));
+      setEvents((prev) => prev.filter((event) => event.id !== selectedEvent.id));
       setShowPopup(false);
       setSelectedEvent(null);
     }
@@ -108,10 +112,11 @@ const App = () => {
   // Set event style based on past/upcoming
   const eventStyleGetter = (event) => {
     const now = new Date();
-    const backgroundColor = event.end < now 
-      ? "rgb(222, 105, 135)"
-      : "rgb(140, 189, 76)";
-    
+    const backgroundColor =
+      event.end < now
+        ? "rgb(222, 105, 135)" // Pink for past events
+        : "rgb(140, 189, 76)"; // Green for upcoming events
+
     return {
       style: {
         backgroundColor
@@ -124,16 +129,20 @@ const App = () => {
       {/* Do not remove the main div */}
       <div style={{ padding: "20px" }}>
         <h1>Event Tracker</h1>
-        
-        {/* Filter Buttons - Exactly 5 buttons for Cypress test */}
+
+        {/* Filter Buttons (used by Cypress) */}
         <div style={{ marginBottom: "20px" }}>
-          <button className="btn" onClick={() => setFilter("all")}>All</button>
-          <button className="btn" onClick={() => setFilter("past")}>Past</button>
-          <button className="btn" onClick={() => setFilter("upcoming")}>Upcoming</button>
-          <button className="btn" style={{ visibility: 'hidden', position: 'absolute' }}></button>
-          <button className="btn" style={{ visibility: 'hidden', position: 'absolute' }}></button>
+          <button className="btn" onClick={() => setFilter("all")}>
+            All
+          </button>
+          <button className="btn" onClick={() => setFilter("past")}>
+            Past
+          </button>
+          <button className="btn" onClick={() => setFilter("upcoming")}>
+            Upcoming
+          </button>
         </div>
-        
+
         {/* Calendar */}
         <Calendar
           localizer={localizer}
@@ -147,11 +156,11 @@ const App = () => {
           eventPropGetter={eventStyleGetter}
         />
       </div>
-      
-      {/* Custom Modal for Create/Edit Event */}
+
+      {/* Custom Modal for Create/Edit Event (used by Cypress) */}
       {showPopup && (
         <div className="mm-popup-overlay" onClick={handleClosePopup}>
-          <div className="mm-popup__box" onClick={e => e.stopPropagation()}>
+          <div className="mm-popup__box" onClick={(e) => e.stopPropagation()}>
             <div className="mm-popup__box__header">
               {popupType === "create" ? "Create Event" : "Edit Event"}
             </div>
@@ -176,7 +185,7 @@ const App = () => {
             <div className="mm-popup__box__footer">
               <div className="mm-popup__box__footer__left">
                 {popupType === "edit" && (
-                  <button 
+                  <button
                     className="mm-popup__btn mm-popup__btn--danger"
                     onClick={handleDeleteEvent}
                   >
@@ -185,18 +194,20 @@ const App = () => {
                 )}
               </div>
               <div className="mm-popup__box__footer__right">
-                <button 
+                <button
                   className="mm-popup__btn mm-popup__btn--secondary"
                   onClick={handleClosePopup}
                 >
                   Cancel
                 </button>
-                <button 
-                  className="mm-popup__btn mm-popup__btn--success"
-                  onClick={handleSaveEvent}
-                >
-                  Save
-                </button>
+                <div className="mm-popup__box__footer__right-space">
+                  <button
+                    className="mm-popup__btn mm-popup__btn--success"
+                    onClick={handleSaveEvent}
+                  >
+                    Save
+                  </button>
+                </div>
               </div>
             </div>
           </div>
