@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
+import BigCalendar from "react-big-calendar";
 import moment from "moment";
-import "./../styles/App.css";
+import "../styles/App.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
-const localizer = momentLocalizer(moment);
+// For v0.20.1: momentLocalizer is a static function on the default export
+const localizer = BigCalendar.momentLocalizer(moment);
 
 const App = () => {
   const [events, setEvents] = useState([]);
   const [filter, setFilter] = useState("all");
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
-  const [popupType, setPopupType] = useState("");
+  const [popupType, setPopupType] = useState(""); // "create" or "edit"
   const [newEvent, setNewEvent] = useState({
     title: "",
     location: "",
@@ -107,9 +108,11 @@ const App = () => {
 
   return (
     <div>
+      {/* Do not remove the main div */}
       <div style={{ padding: "20px" }}>
         <h1>Event Tracker</h1>
 
+        {/* Filter Buttons */}
         <div style={{ marginBottom: "20px" }}>
           <button className="btn" onClick={() => setFilter("all")}>
             All
@@ -122,6 +125,7 @@ const App = () => {
           </button>
         </div>
 
+        {/* Calendar – for v0.20.1 you still use <BigCalendar /> */}
         <BigCalendar
           localizer={localizer}
           events={filteredEvents}
@@ -135,6 +139,7 @@ const App = () => {
         />
       </div>
 
+      {/* Custom Modal for Create/Edit Event */}
       {showPopup && (
         <div className="mm-popup-overlay" onClick={handleClosePopup}>
           <div className="mm-popup__box" onClick={(e) => e.stopPropagation()}>
