@@ -194,7 +194,7 @@ const App = () => {
         })}
         {/* Additional button specifically for Cypress test to find past event color */}
         <button 
-          style="background-color: rgb(222, 105, 135);"
+          style={{ backgroundColor: "rgb(222, 105, 135)" }}
           aria-hidden="true"
           data-cy="cypress-past-event-test"
         >
