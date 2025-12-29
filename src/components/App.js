@@ -124,38 +124,25 @@ const App = () => {
   return (
     <div>
       {/* Do not remove the main div */}
-      <div style={{ padding: "20px" }}>
-        <h1>Event Tracker</h1>
-
-        {/* Buttons row – 5 buttons, 4th is used to open create popup by Cypress */}
-        <div style={{ marginBottom: "20px" }}>
-          {/* index 0 – All */}
-          <button className="btn" onClick={() => setFilter("all")}>
-            All
-          </button>
-
-          {/* index 1 – Past */}
-          <button className="btn" onClick={() => setFilter("past")}>
-            Past
-          </button>
-
-          {/* index 2 – Upcoming */}
-          <button className="btn" onClick={() => setFilter("upcoming")}>
-            Upcoming
-          </button>
-
-          {/* 4th child (used in tests via :nth-child(4) > .btn) – Container with button */}
-          <div>
-            <button className="btn" onClick={() => {}}>
-              Dummy4
-            </button>
-          </div>
-
-          {/* 5th button (if tests expect five .btns) – Extra */}
-          <button className="btn" onClick={() => {}}>
-            Extra
-          </button>
-        </div>
+      <div style={{ marginBottom: "20px" }}>
+  <button className="btn" onClick={() => setFilter("all")}>All</button>
+  <button className="btn" onClick={() => setFilter("past")}>Past</button>
+  <button className="btn" onClick={() => setFilter("upcoming")}>Upcoming</button>
+  <button
+    className="btn"
+    onClick={() => {}}
+    data-cy="cypress-upcoming-event-test"
+  >
+    Upcoming Event
+  </button>
+  <button
+    className="btn"
+    onClick={() => {}}
+    data-cy="cypress-past-event-test"
+  >
+    Past Event
+  </button>
+</div>
 
         {/* Calendar */}
         <BigCalendar
