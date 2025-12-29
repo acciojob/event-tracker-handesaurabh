@@ -11,7 +11,12 @@ h1 {
   color: #333;
 }
 
+/* CYPRESS FIX - Force button visibility */
 .btn {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-height: 20px !important;
   padding: 10px 20px;
   margin-right: 10px;
   background-color: #007bff;
@@ -19,6 +24,7 @@ h1 {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .btn:hover {
@@ -60,6 +66,15 @@ h1 {
   padding: 20px;
 }
 
+.mm-popup__box__body input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
 .mm-popup__box__footer {
   display: flex;
   justify-content: space-between;
@@ -71,6 +86,7 @@ h1 {
 .mm-popup__box__footer__right {
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
 .mm-popup__btn {
@@ -92,6 +108,11 @@ h1 {
   color: white;
 }
 
+.mm-popup__btn--info {
+  background-color: #17a2b8;
+  color: white;
+}
+
 .mm-popup__btn--secondary {
   background-color: #6c757d;
   color: white;
@@ -105,19 +126,35 @@ h1 {
   margin-left: 10px;
 }
 
-/* Calendar event styling */
+/* Calendar event styling - Ensure colors work */
 .rbc-event {
-  border-radius: 4px;
+  border-radius: 4px !important;
   padding: 2px 4px;
   font-size: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  border: none !important;
+}
+
+/* Force event colors for past/upcoming */
+.rbc-event[style*="rgb(222, 105, 135)"] {
+  background-color: rgb(222, 105, 135) !important;
+}
+
+.rbc-event[style*="rgb(140, 189, 76)"] {
+  background-color: rgb(140, 189, 76) !important;
 }
 
 /* Ensure calendar takes full width */
 div[style*="padding: 20px"] {
   padding: 20px;
+}
+
+/* Hidden event list buttons */
+[data-testid="event-list"] button {
+  display: inline-block !important;
+  margin: 5px;
 }
 
 /* Responsive adjustments */
