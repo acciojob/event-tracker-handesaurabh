@@ -8,20 +8,20 @@ const localizer = BigCalendar.momentLocalizer(moment);
 
 const App = () => {
     const [events, setEvents] = useState([
-        {
-            id: 1,
-            title: "Past Event",
-            location: "Past Location",
-            start: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-            end: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000)
-        },
-        {
-    id: 2,
-    title: "Upcoming Event", 
-    location: "Future Location",
-    start: new Date(Date.now() + 24 * 60 * 60 * 1000),
-    end: new Date(Date.now() + 24 * 60 * 60 * 1000 + 60 * 60 * 1000)
-  }
+       {
+        id: 1,
+        title: "Past Event",
+        location: "Past Location",
+        start: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+        end: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000)
+    },
+    {  
+        id: 2,
+        title: "Upcoming Event", 
+        location: "Future Location",
+        start: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        end: new Date(Date.now() + 24 * 60 * 60 * 1000 + 60 * 60 * 1000)
+    }
     ]);
 
     const [filter, setFilter] = useState("all");
