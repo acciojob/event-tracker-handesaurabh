@@ -122,7 +122,7 @@ const App = () => {
     return (
         <div>
             {/* Do not remove the main div */}
-            <div style={{ marginBottom: "20px" }}>
+            <div data-cy="filter-buttons" style={{ marginBottom: "20px" }}>
                 <button className="btn" onClick={() => setFilter("all")}>All</button>
                 <button className="btn" onClick={() => setFilter("past")}>Past</button>
                 <button className="btn" onClick={() => setFilter("upcoming")}>Upcoming</button>
