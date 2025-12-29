@@ -195,7 +195,7 @@ const App = () => {
         {/* Additional button specifically for Cypress test to find past event color */}
         {filteredEvents.some(event => event.end < new Date()) && (
           <button 
-            style={{ backgroundColor: "rgb(222, 105, 135)", display: "none" }}
+            style="background-color: rgb(222, 105, 135); display: none;"
             aria-hidden="true"
             data-cy="cypress-past-event-test"
           >
