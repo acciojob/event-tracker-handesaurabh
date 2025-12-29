@@ -186,7 +186,7 @@ const App = () => {
                 padding: "6px 10px",
                 border: "none"
               }}
-              data-cy={isPast ? "past-event" : "upcoming-event"}
+              data-cy={isPast ? "past-event" : "upcoming-event"} // ✅ only addition
             >
               {event.title}
             </button>
