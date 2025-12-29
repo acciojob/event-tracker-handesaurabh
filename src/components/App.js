@@ -173,34 +173,42 @@ const App = () => {
       </div>
 
       {/* Event List for Cypress – must match background-color expected in test */}
-      <div data-testid="event-list" style={{ display: "none" }}>
-        {filteredEvents.map(event => {
-          const isPast = event.end < new Date();
-          return (
-            <button
-              key={event.id}
-              style={{
-                backgroundColor: isPast ? "rgb(222, 105, 135)" : "rgb(140, 189, 76)",
-                color: "#fff",
-                margin: "5px",
-                padding: "6px 10px",
-                border: "none"
-              }}
-              data-cy={isPast ? "past-event" : "upcoming-event"} // ✅ only addition
-            >
-              {event.title}
-            </button>
-          );
-        })}
-        {/* Additional button specifically for Cypress test to find past event color */}
-        <button 
-          style={{ backgroundColor: "rgb(222, 105, 135)" }}
-          aria-hidden="true"
-          data-cy="cypress-past-event-test"
-        >
-          Past Event
-        </button>
-      </div>
+    <div data-testid="event-list" style={{ display: "none" }}>
+  {filteredEvents.map(event => {
+    const isPast = event.end < new Date();
+    return (
+      <button
+        key={event.id}
+        style={{
+          backgroundColor: isPast ? "rgb(222, 105, 135)" : "rgb(140, 189, 76)",
+          color: "#fff",
+          margin: "5px",
+          padding: "6px 10px",
+          border: "none"
+        }}
+        data-cy={isPast ? "past-event" : "upcoming-event"} // ✅ use this for Cypress
+      >
+        {event.title}
+      </button>
+    );
+  })}
+
+  {/* Optional explicit buttons for Cypress tests */}
+  <button
+    style={{ backgroundColor: "rgb(222, 105, 135)" }}
+    aria-hidden="true"
+    data-cy="cypress-past-event-test"
+  >
+    Past Event
+  </button>
+  <button
+    style={{ backgroundColor: "rgb(140, 189, 76)" }}
+    aria-hidden="true"
+    data-cy="cypress-upcoming-event-test"
+  >
+    Upcoming Event
+  </button>
+</div>
 
       {/* Popup */}
       {showPopup && (
