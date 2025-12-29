@@ -133,9 +133,7 @@ const App = () => {
   >
     Past Event
   </button>
-</div>
-
-        <BigCalendar
+         <BigCalendar
           localizer={localizer}
           events={filteredEvents}
           startAccessor="start"
@@ -147,7 +145,7 @@ const App = () => {
           onSelectEvent={handleSelectEvent}
           eventPropGetter={eventStyleGetter}
         />
-      </div>
+</div>
 
       
     <div data-testid="event-list" style={{ display: "none" }}>
@@ -163,7 +161,7 @@ const App = () => {
           padding: "6px 10px",
           border: "none"
         }}
-        data-cy={isPast ? "past-event" : "upcoming-event"} // ✅ use this for Cypress
+        data-cy={isPast ? "past-event" : "upcoming-event"} 
       >
         {event.title}
       </button>
