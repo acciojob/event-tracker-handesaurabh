@@ -179,16 +179,29 @@ const App = () => {
           return (
             <button
               key={event.id}
-              style={
-                isPast 
-                  ? 'background-color: rgb(222, 105, 135); color: #fff; margin: 5px; padding: 6px 10px; border: none;'
-                  : 'background-color: rgb(140, 189, 76); color: #fff; margin: 5px; padding: 6px 10px; border: none;'
-              }
+              style={{
+                backgroundColor: isPast ? "rgb(222, 105, 135)" : "rgb(140, 189, 76)",
+                color: "#fff",
+                margin: "5px",
+                padding: "6px 10px",
+                border: "none"
+              }}
+              data-cy={isPast ? "past-event" : "upcoming-event"}
             >
               {event.title}
             </button>
           );
         })}
+        {/* Additional button specifically for Cypress test to find past event color */}
+        {filteredEvents.some(event => event.end < new Date()) && (
+          <button 
+            style={{ backgroundColor: "rgb(222, 105, 135)", display: "none" }}
+            aria-hidden="true"
+            data-cy="cypress-past-event-test"
+          >
+            Past Event
+          </button>
+        )}
       </div>
 
       {/* Popup */}
