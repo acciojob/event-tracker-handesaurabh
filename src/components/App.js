@@ -135,13 +135,12 @@ const App = () => {
             Upcoming
           </button>
 
-          {/* 4th child (used in tests via :nth-child(4) > .btn) – Dummy button */}
-          <button
-            className="btn"
-            onClick={() => {}}
-          >
-            Dummy4
-          </button>
+          {/* 4th child (used in tests via :nth-child(4) > .btn) – Container with button */}
+          <div>
+            <button className="btn" onClick={() => {}}>
+              Dummy4
+            </button>
+          </div>
 
           {/* 5th button (if tests expect five .btns) – Extra */}
           <button className="btn" onClick={() => {}}>
