@@ -8,7 +8,16 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 const localizer = BigCalendar.momentLocalizer(moment);
 
 const App = () => {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([
+    {
+      id: 1,
+      title: "Past Event",
+      location: "Past Location",
+      start: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+      end: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000) // 2 days ago + 1 hour
+    }
+  ]);
+
   const [filter, setFilter] = useState("all");
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
