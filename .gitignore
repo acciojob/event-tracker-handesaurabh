@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+*.log
+dist/
+package-lock.json
+cypress/videos/
+cypress/screenshots/
