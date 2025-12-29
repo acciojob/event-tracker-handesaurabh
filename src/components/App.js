@@ -4,7 +4,6 @@ import moment from "moment";
 import "../styles/App.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
-// react-big-calendar v0.20.1: momentLocalizer is a static method
 const localizer = BigCalendar.momentLocalizer(moment);
 
 const App = () => {
@@ -13,15 +12,15 @@ const App = () => {
       id: 1,
       title: "Past Event",
       location: "Past Location",
-      start: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
-      end: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000) // 2 days ago + 1 hour
+      start: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), 
+      end: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000) 
     }
   ]);
 
   const [filter, setFilter] = useState("all");
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
-  const [popupType, setPopupType] = useState(""); // "create" or "edit"
+  const [popupType, setPopupType] = useState(""); 
   const [newEvent, setNewEvent] = useState({
     title: "",
     location: "",
@@ -29,7 +28,6 @@ const App = () => {
     end: new Date()
   });
 
-  // filter events
   const filteredEvents = events.filter((event) => {
     const now = new Date();
     if (filter === "past") return event.end < now;
@@ -37,7 +35,6 @@ const App = () => {
     return true;
   });
 
-  // open popup by clicking a slot (calendar date)
   const handleSelectSlot = (slotInfo) => {
     setNewEvent({
       title: "",
@@ -49,7 +46,6 @@ const App = () => {
     setShowPopup(true);
   };
 
-  // open popup by clicking an event
   const handleSelectEvent = (event) => {
     setSelectedEvent(event);
     setNewEvent({
@@ -62,7 +58,6 @@ const App = () => {
     setShowPopup(true);
   };
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewEvent(prev => ({
@@ -71,11 +66,10 @@ const App = () => {
     }));
   };
 
-  // Save new event
   const handleSaveEvent = () => {
     if (popupType === "create") {
       const event = {
-        id: Date.now(), // Better unique ID
+        id: Date.now(), 
         title: newEvent.title,
         location: newEvent.location,
         start: newEvent.start,
@@ -96,7 +90,6 @@ const App = () => {
     setSelectedEvent(null);
   };
 
-  // Delete event
   const handleDeleteEvent = () => {
     if (selectedEvent) {
       setEvents(prev => prev.filter(event => event.id !== selectedEvent.id));
@@ -105,14 +98,12 @@ const App = () => {
     }
   };
 
-  // Close popup
   const handleClosePopup = () => {
     setShowPopup(false);
     setNewEvent({ title: "", location: "", start: new Date(), end: new Date() });
     setSelectedEvent(null);
   };
 
-  // Set event style based on past/upcoming
   const eventStyleGetter = (event) => {
     const now = new Date();
     const backgroundColor =
@@ -144,7 +135,6 @@ const App = () => {
   </button>
 </div>
 
-        {/* Calendar */}
         <BigCalendar
           localizer={localizer}
           events={filteredEvents}
@@ -152,14 +142,14 @@ const App = () => {
           endAccessor="end"
           selectable
           style={{ height: 500 }}
-          defaultDate={new Date()} // Show current date by default to ensure past dates are visible
+          defaultDate={new Date()} 
           onSelectSlot={handleSelectSlot}
           onSelectEvent={handleSelectEvent}
           eventPropGetter={eventStyleGetter}
         />
       </div>
 
-      {/* Event List for Cypress – must match background-color expected in test */}
+      
     <div data-testid="event-list" style={{ display: "none" }}>
   {filteredEvents.map(event => {
     const isPast = event.end < new Date();
@@ -180,7 +170,6 @@ const App = () => {
     );
   })}
 
-  {/* Optional explicit buttons for Cypress tests */}
   <button
     style={{ backgroundColor: "rgb(222, 105, 135)" }}
     aria-hidden="true"
@@ -197,7 +186,6 @@ const App = () => {
   </button>
 </div>
 
-      {/* Popup */}
       {showPopup && (
         <div className="mm-popup-overlay" onClick={handleClosePopup}>
           <div className="mm-popup__box" onClick={(e) => e.stopPropagation()}>
@@ -228,7 +216,7 @@ const App = () => {
               <div className="mm-popup__box__footer__left">
                 {popupType === "edit" && (
                   <>
-                    {/* Edit button required by spec/tests */}
+                   
                     <button
                       className="mm-popup__btn mm-popup__btn--info"
                       onClick={handleSaveEvent}
@@ -236,7 +224,7 @@ const App = () => {
                       Edit
                     </button>
 
-                    {/* Delete button */}
+                   
                     <button
                       className="mm-popup__btn mm-popup__btn--danger"
                       onClick={handleDeleteEvent}
@@ -255,7 +243,7 @@ const App = () => {
                   Cancel
                 </button>
 
-                {/* Save button selector used in tests: .mm-popup__box__footer__right-space > .mm-popup__btn */}   
+                  
                 <div className="mm-popup__box__footer__right-space">
                   <button
                     className="mm-popup__btn mm-popup__btn--success"
