@@ -179,15 +179,11 @@ const App = () => {
           return (
             <button
               key={event.id}
-              style={{
-                backgroundColor: isPast
-                  ? "rgb(222, 105, 135)"
-                  : "rgb(140, 189, 76)",
-                color: "#fff",
-                margin: "5px",
-                padding: "6px 10px",
-                border: "none"
-              }}
+              style={
+                isPast 
+                  ? 'background-color: rgb(222, 105, 135); color: #fff; margin: 5px; padding: 6px 10px; border: none;'
+                  : 'background-color: rgb(140, 189, 76); color: #fff; margin: 5px; padding: 6px 10px; border: none;'
+              }
             >
               {event.title}
             </button>
