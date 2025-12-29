@@ -8,20 +8,20 @@ const localizer = BigCalendar.momentLocalizer(moment);
 
 const App = () => {
     const [events, setEvents] = useState([
-       {
-        id: 1,
-        title: "Past Event",
-        location: "Past Location",
-        start: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-        end: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000)
-    },
-    {  
-        id: 2,
-        title: "Upcoming Event", 
-        location: "Future Location",
-        start: new Date(Date.now() + 24 * 60 * 60 * 1000),
-        end: new Date(Date.now() + 24 * 60 * 60 * 1000 + 60 * 60 * 1000)
-    }
+        {
+            id: 1,
+            title: "Past Event",
+            location: "Past Location",
+            start: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+            end: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000)
+        },
+        {
+            id: 2,
+            title: "Upcoming Event", 
+            location: "Future Location",
+            start: new Date(Date.now() + 24 * 60 * 60 * 1000),
+            end: new Date(Date.now() + 24 * 60 * 60 * 1000 + 60 * 60 * 1000)
+        }
     ]);
 
     const [filter, setFilter] = useState("all");
@@ -120,154 +120,146 @@ const App = () => {
     };
 
     return (
-    <div>
-      {/* Do not remove the main div */}
-      <div style={{ marginBottom: "20px" }}>
-  <button className="btn" onClick={() => setFilter("all")}>All</button>
-  <button className="btn" onClick={() => setFilter("past")}>Past</button>
-  <button className="btn" onClick={() => setFilter("upcoming")}>Upcoming</button>
-  <button
-    className="btn"
-    onClick={() => {}}
-    data-cy="cypress-upcoming-event-test"
-  >
-    Upcoming Event
-  </button>
-  <button
-    className="btn"
-    onClick={() => {}}
-    data-cy="cypress-past-event-test"
-  >
-    Past Event
-  </button>
-</div>
+        <div>
+            {/* Do not remove the main div */}
+            <div style={{ marginBottom: "20px" }}>
+                <button className="btn" onClick={() => setFilter("all")}>All</button>
+                <button className="btn" onClick={() => setFilter("past")}>Past</button>
+                <button className="btn" onClick={() => setFilter("upcoming")}>Upcoming</button>
+                <button
+                    className="btn"
+                    onClick={() => {}}
+                    data-cy="cypress-upcoming-event-test"
+                >
+                    Upcoming Event
+                </button>
+                <button
+                    className="btn"
+                    onClick={() => {}}
+                    data-cy="cypress-past-event-test"
+                >
+                    Past Event
+                </button>
+            </div>
 
-        <BigCalendar
-          localizer={localizer}
-          events={filteredEvents}
-          startAccessor="start"
-          endAccessor="end"
-          selectable
-          style={{ height: 500 }}
-          defaultDate={new Date()}
-          onSelectSlot={handleSelectSlot}
-          onSelectEvent={handleSelectEvent}
-          eventStyleGetter={eventStyleGetter}
-        />
-     
+            <BigCalendar
+                localizer={localizer}
+                events={filteredEvents}
+                startAccessor="start"
+                endAccessor="end"
+                selectable
+                style={{ height: 500 }}
+                defaultDate={new Date()}
+                onSelectSlot={handleSelectSlot}
+                onSelectEvent={handleSelectEvent}
+                eventStyleGetter={eventStyleGetter}
+            />
 
-      
-    <div data-testid="event-list" style={{ display: "none" }}>
-  {filteredEvents.map(event => {
-    const isPast = event.end < new Date();
-    return (
-      <button
-        key={event.id}
-        style={{
-          backgroundColor: isPast ? "rgb(222, 105, 135)" : "rgb(140, 189, 76)",
-          color: "#fff",
-          margin: "5px",
-          padding: "6px 10px",
-          border: "none"
-        }}
-        data-cy={isPast ? "past-event" : "upcoming-event"} 
-      >
-        {event.title}
-      </button>
-    );
-  })}
+            <div data-testid="event-list" style={{ display: "none" }}>
+                {filteredEvents.map(event => {
+                    const isPast = event.end < new Date();
+                    return (
+                        <button
+                            key={event.id}
+                            style={{
+                                backgroundColor: isPast ? "rgb(222, 105, 135)" : "rgb(140, 189, 76)",
+                                color: "#fff",
+                                margin: "5px",
+                                padding: "6px 10px",
+                                border: "none"
+                            }}
+                            data-cy={isPast ? "past-event" : "upcoming-event"} 
+                        >
+                            {event.title}
+                        </button>
+                    );
+                })}
+                <button
+                    style={{ backgroundColor: "rgb(222, 105, 135)" }}
+                    aria-hidden="true"
+                    data-cy="cypress-past-event-test"
+                >
+                    Past Event
+                </button>
+                <button
+                    style={{ backgroundColor: "rgb(140, 189, 76)" }}
+                    aria-hidden="true"
+                    data-cy="cypress-upcoming-event-test"
+                >
+                    Upcoming Event
+                </button>
+            </div>
 
-  <button
-    style={{ backgroundColor: "rgb(222, 105, 135)" }}
-    aria-hidden="true"
-    data-cy="cypress-past-event-test"
-  >
-    Past Event
-  </button>
-  <button
-    style={{ backgroundColor: "rgb(140, 189, 76)" }}
-    aria-hidden="true"
-    data-cy="cypress-upcoming-event-test"
-  >
-    Upcoming Event
-  </button>
-</div>
-
-      {
-        showPopup && (
-            <div className="mm-popup-overlay" onClick={handleClosePopup}>
-                <div className="mm-popup__box" onClick={(e) => e.stopPropagation()}>
-                    <div className="mm-popup__box__header">
-                        {popupType === "create" ? "Create Event" : "Edit Event"}
-                    </div>
-
-                    <div className="mm-popup__box__body">
-                        <input
-                            type="text"
-                            placeholder="Event Title"
-                            name="title"
-                            value={newEvent.title}
-                            onChange={handleInputChange}
-                            style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-                        />
-                        <input
-                            type="text"
-                            placeholder="Event Location"
-                            name="location"
-                            value={newEvent.location}
-                            onChange={handleInputChange}
-                            style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-                        />
-                    </div>
-
-                    <div className="mm-popup__box__footer">
-                        <div className="mm-popup__box__footer__left">
-                            {popupType === "edit" && (
-                                <>
-
-                                    <button
-                                        className="mm-popup__btn mm-popup__btn--info"
-                                        onClick={handleSaveEvent}
-                                    >
-                                        Edit
-                                    </button>
-
-
-                                    <button
-                                        className="mm-popup__btn mm-popup__btn--danger"
-                                        onClick={handleDeleteEvent}
-                                    >
-                                        Delete
-                                    </button>
-                                </>
-                            )}
+            {showPopup && (
+                <div className="mm-popup-overlay" onClick={handleClosePopup}>
+                    <div className="mm-popup__box" onClick={(e) => e.stopPropagation()}>
+                        <div className="mm-popup__box__header">
+                            {popupType === "create" ? "Create Event" : "Edit Event"}
                         </div>
 
-                        <div className="mm-popup__box__footer__right">
-                            <button
-                                className="mm-popup__btn mm-popup__btn--secondary"
-                                onClick={handleClosePopup}
-                            >
-                                Cancel
-                            </button>
+                        <div className="mm-popup__box__body">
+                            <input
+                                type="text"
+                                placeholder="Event Title"
+                                name="title"
+                                value={newEvent.title}
+                                onChange={handleInputChange}
+                                style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+                            />
+                            <input
+                                type="text"
+                                placeholder="Event Location"
+                                name="location"
+                                value={newEvent.location}
+                                onChange={handleInputChange}
+                                style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
+                            />
+                        </div>
 
+                        <div className="mm-popup__box__footer">
+                            <div className="mm-popup__box__footer__left">
+                                {popupType === "edit" && (
+                                    <>
+                                        <button
+                                            className="mm-popup__btn mm-popup__btn--info"
+                                            onClick={handleSaveEvent}
+                                        >
+                                            Edit
+                                        </button>
 
-                            <div className="mm-popup__box__footer__right-space">
+                                        <button
+                                            className="mm-popup__btn mm-popup__btn--danger"
+                                            onClick={handleDeleteEvent}
+                                        >
+                                            Delete
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+
+                            <div className="mm-popup__box__footer__right">
                                 <button
-                                    className="mm-popup__btn mm-popup__btn--success"
-                                    onClick={handleSaveEvent}
+                                    className="mm-popup__btn mm-popup__btn--secondary"
+                                    onClick={handleClosePopup}
                                 >
-                                    Save
+                                    Cancel
                                 </button>
+
+                                <div className="mm-popup__box__footer__right-space">
+                                    <button
+                                        className="mm-popup__btn mm-popup__btn--success"
+                                        onClick={handleSaveEvent}
+                                    >
+                                        Save
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        )
-    }
-    </div>
-  );
+            )}
+        </div>
+    );
 };
 
 export default App;
