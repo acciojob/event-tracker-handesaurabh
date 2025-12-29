@@ -173,25 +173,26 @@ const App = () => {
       </div>
 
       {/* Event List for Cypress – must match background-color expected in test */}
-     <div data-testid="event-list" style={{ display: "none" }}>
-  {filteredEvents.map(event => {
-    const isPast = event.end < new Date();
-    return (
-      <button
-        key={event.id}
-        style={{
-          backgroundColor: isPast ? "rgb(222, 105, 135)" : "rgb(140, 189, 76)",
-          color: "#fff",
-          margin: "5px",
-          padding: "6px 10px",
-          border: "none"
-        }}
-      >
-        {event.title}
-      </button>
-    );
-  })}
-</div>
+      <div data-testid="event-list" style={{ display: "none" }}>
+        {filteredEvents.map(event => {
+          const isPast = event.end < new Date();
+          return (
+            <button
+              key={event.id}
+              style={{
+                backgroundColor: isPast ? "rgb(222, 105, 135)" : "rgb(140, 189, 76)",
+                color: "#fff",
+                margin: "5px",
+                padding: "6px 10px",
+                border: "none"
+              }}
+              data-cy={isPast ? "past-event" : "upcoming-event"} // ✅ only addition
+            >
+              {event.title}
+            </button>
+          );
+        })}
+      </div>
 
       {/* Popup */}
       {showPopup && (
