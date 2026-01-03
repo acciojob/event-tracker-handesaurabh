@@ -104,6 +104,13 @@ function App() {
                 onSelectSlot={handleSelectSlot}
                 onSelectEvent={handleSelectEvent}
                 eventPropGetter={eventStyleGetter}
+                components={{
+                    event: ({ event }) => (
+                        <button style={eventStyleGetter(event).style} className="rbc-event-btn">
+                            {event.title}
+                        </button>
+                    )
+                }}
             />
 
 
