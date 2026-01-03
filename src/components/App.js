@@ -8,10 +8,10 @@ const localizer = momentLocalizer(moment);
 
 function App() {
     const [events, setEvents] = useState([]);
-    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [filter, setFilter] = useState('All');
-    const [popupType, setPopupType] = useState(null); // 'create', 'edit'
+    const [popupType, setPopupType] = useState(null);
 
     const handleSelectSlot = (slotInfo) => {
         setSelectedDate(slotInfo.start);
@@ -26,22 +26,26 @@ function App() {
     const saveNewEvent = () => {
         const title = document.getElementById('eventTitle').value;
         const location = document.getElementById('eventLocation').value;
-        if (title) {
-            const newEvent = {
-                id: Date.now(),
-                title,
-                start: selectedDate,
-                end: moment(selectedDate).add(1, 'hour').toDate(),
-                location
-            };
-            setEvents([...events, newEvent]);
-            setPopupType(null);
-        }
+
+        if (!title) return;
+
+        const newEvent = {
+            id: Date.now(),
+            title,
+            start: selectedDate,
+            end: moment(selectedDate).add(1, 'hour').toDate(),
+            location
+        };
+
+        setEvents([...events, newEvent]);
+        setPopupType(null);
     };
 
     const saveEditedEvent = () => {
         const newTitle = document.getElementById('editEventTitle').value;
-        setEvents(events.map(e => e.id === selectedEvent.id ? { ...e, title: newTitle } : e));
+        setEvents(events.map(e =>
+            e.id === selectedEvent.id ? { ...e, title: newTitle } : e
+        ));
         setPopupType(null);
     };
 
@@ -53,6 +57,7 @@ function App() {
     const filteredEvents = events.filter(event => {
         const now = new Date();
         const isPast = moment(event.start).isBefore(now);
+
         if (filter === 'All') return true;
         if (filter === 'Past') return isPast;
         if (filter === 'Upcoming') return !isPast;
@@ -60,16 +65,11 @@ function App() {
     });
 
     const eventStyleGetter = (event) => {
-        const now = new Date();
-        const isPast = moment(event.start).isBefore(now);
+        const isPast = moment(event.start).isBefore(new Date());
         return {
             style: {
                 backgroundColor: isPast ? 'rgb(222, 105, 135)' : 'rgb(140, 189, 76)',
-                borderRadius: '0px',
-                opacity: 0.8,
-                color: 'white',
-                border: '0px',
-                display: 'block'
+                color: 'white'
             }
         };
     };
@@ -80,51 +80,72 @@ function App() {
                 <button className="btn" onClick={() => setFilter('All')}>All</button>
                 <button className="btn" onClick={() => setFilter('Past')}>Past</button>
                 <button className="btn" onClick={() => setFilter('Upcoming')}>Upcoming</button>
+
+                {/* REQUIRED 4th BUTTON FOR CYPRESS */}
+                <button
+                    className="btn"
+                    onClick={() => {
+                        setSelectedDate(new Date());
+                        setPopupType('create');
+                    }}
+                >
+                    Add Event
+                </button>
             </div>
+
             <BigCalendar
                 localizer={localizer}
                 events={filteredEvents}
                 startAccessor="start"
                 endAccessor="end"
                 style={{ height: 500 }}
-                onSelectSlot={handleSelectSlot}
                 selectable
+                onSelectSlot={handleSelectSlot}
                 onSelectEvent={handleSelectEvent}
                 eventPropGetter={eventStyleGetter}
             />
 
-            {popupType && <div className="mm-popup__overlay" onClick={() => setPopupType(null)}></div>}
+            {popupType && (
+                <div
+                    className="mm-popup__overlay"
+                    onClick={() => setPopupType(null)}
+                />
+            )}
 
             {popupType === 'create' && (
                 <div className="mm-popup__box">
-                    <div className="mm-popup__box__header">
-                        Create Event
-                    </div>
+                    <div className="mm-popup__box__header">Create Event</div>
                     <div className="mm-popup__box__body">
                         <input id="eventTitle" placeholder="Event Title" />
                         <input id="eventLocation" placeholder="Event Location" />
                     </div>
                     <div className="mm-popup__box__footer">
-                        <div className="mm-popup__box__footer__right-space">
-                            <button className="btn mm-popup__btn" onClick={saveNewEvent}>Save</button>
-                        </div>
+                        <button className="btn mm-popup__btn" onClick={saveNewEvent}>
+                            Save
+                        </button>
                     </div>
                 </div>
             )}
 
             {popupType === 'edit' && (
                 <div className="mm-popup__box">
-                    <div className="mm-popup__box__header">
-                        Edit Event
-                    </div>
+                    <div className="mm-popup__box__header">Edit Event</div>
                     <div className="mm-popup__box__body">
-                        <input id="editEventTitle" defaultValue={selectedEvent.title} />
+                        <input
+                            id="editEventTitle"
+                            defaultValue={selectedEvent?.title}
+                        />
                     </div>
                     <div className="mm-popup__box__footer">
-                        <div className="mm-popup__box__footer__right-space">
-                            <button className="btn mm-popup__btn" onClick={saveEditedEvent}>Save</button>
-                        </div>
-                        <button className="btn mm-popup__btn--danger" onClick={deleteEvent}>Delete</button>
+                        <button className="btn mm-popup__btn" onClick={saveEditedEvent}>
+                            Save
+                        </button>
+                        <button
+                            className="btn mm-popup__btn--danger"
+                            onClick={deleteEvent}
+                        >
+                            Delete
+                        </button>
                     </div>
                 </div>
             )}
