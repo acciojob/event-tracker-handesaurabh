@@ -133,26 +133,31 @@ function App() {
                 </div>
             )}
 
-
-            {popupType === 'create' && (
+            {popupType === 'edit' && (
                 <div className="mm-popup__box">
                     <div className="mm-popup__box__header">
-                        Create Event
+                        Edit Event
                     </div>
 
                     <div className="mm-popup__box__body">
-                        <input id="eventTitle" placeholder="Event Title" />
+                        <input id="editEventTitle" defaultValue={selectedEvent?.title || ''} />
                     </div>
 
                     <div className="mm-popup__box__footer">
                         <div className="mm-popup__box__footer__right-space">
                             <button
                                 className="mm-popup__btn"
-                                onClick={saveNewEvent}
+                                onClick={saveEditedEvent}
                             >
                                 Save
                             </button>
                         </div>
+                        <button
+                            className="mm-popup__btn--danger"
+                            onClick={deleteEvent}
+                        >
+                            Delete
+                        </button>
                     </div>
                 </div>
             )}
