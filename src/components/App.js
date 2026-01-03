@@ -61,19 +61,37 @@ function App() {
     return (
         <div className="App">
             <div className="filter-buttons">
-                <button className="btn" onClick={() => setFilter('All')}>All</button>
-                <button className="btn" onClick={() => setFilter('Past')}>Past</button>
-                <button className="btn" onClick={() => setFilter('Upcoming')}>Upcoming</button>
-                <button
-                    className="btn"
-                    onClick={() => {
-                        setSelectedDate(new Date());
-                        setPopupType('create');
-                    }}
-                >
-                    Add Event
-                </button>
+                <div>
+                    <button className="btn" onClick={() => setFilter('All')}>
+                        All
+                    </button>
+                </div>
+
+                <div>
+                    <button className="btn" onClick={() => setFilter('Past')}>
+                        Past
+                    </button>
+                </div>
+
+                <div>
+                    <button className="btn" onClick={() => setFilter('Upcoming')}>
+                        Upcoming
+                    </button>
+                </div>
+
+                <div>
+                    <button
+                        className="btn"
+                        onClick={() => {
+                            setSelectedDate(new Date());
+                            setPopupType('create');
+                        }}
+                    >
+                        Add Event
+                    </button>
+                </div>
             </div>
+
 
             <BigCalendar
                 localizer={localizer}
