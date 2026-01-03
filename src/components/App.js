@@ -105,12 +105,7 @@ function App() {
                 eventPropGetter={eventStyleGetter}
             />
 
-            {popupType && (
-                <div
-                    className="mm-popup__overlay"
-                    onClick={() => setPopupType(null)}
-                />
-            )}
+
 
             {popupType === 'create' && (
                 <div className="mm-popup__box">
