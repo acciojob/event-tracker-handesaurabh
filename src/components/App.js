@@ -70,6 +70,7 @@ function App() {
             }
         };
     };
+    console.log('NODE_ENV:', process.env.NODE_ENV);
     return (
         <div className="App">
             <div className="filter-buttons">
@@ -108,6 +109,7 @@ function App() {
                         <button className="btn">Test</button>
                     </div>
                 )}
+
 
 
             </div>

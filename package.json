@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
- "scripts": {
-    "start": "webpack-dev-server --mode development --open --hot",
-    "start:test": "cross-env NODE_ENV=test webpack-dev-server --mode development --open --hot",
-    "cypress": "cypress open",
-    "test": "cross-env NODE_ENV=test jest --no-color 2>output.txt"
+  "scripts": {
+     "start": "webpack-dev-server --mode development --open --hot --node-options=--openssl-legacy-provider",
+    "start:test": "cross-env NODE_ENV=test webpack-dev-server --mode development --open --hot --node-options=--openssl-legacy-provider",
+    "build": "webpack --mode production --node-options=--openssl-legacy-provider"
   },
   "keywords": [],
   "author": "",
@@ -53,6 +52,7 @@
     "html-webpack-plugin": "^4.5.0",
     "jest": "^26.4.2",
     "react-test-renderer": "^16.13.1",
+    "start-server-and-test": "^2.1.3",
     "webpack": "^4.44.2",
     "webpack-dev-server": "^3.11.0",
     "xml-js": "^1.6.11"

@@ -1,12 +1,7 @@
-Browserslist: caniuse-lite is outdated. Please run:
-npx browserslist@latest --update-db
-
-Why you should do it regularly:
-https://github.com/browserslist/browserslist#browsers-data-updating
 FAIL ./temp_test.spec.js
   Calendar App
-    × adding events and validating events (2 ms)
-    × should be able to edit events (1 ms)
+    × adding events and validating events (3 ms)
+    × should be able to edit events
     × should be able to delete events
     × should filter events correctly (1 ms)
 
@@ -133,5 +128,5 @@ FAIL ./temp_test.spec.js
 Test Suites: 1 failed, 1 total
 Tests:       4 failed, 4 total
 Snapshots:   0 total
-Time:        4.406 s
+Time:        4.369 s
 Ran all test suites.
