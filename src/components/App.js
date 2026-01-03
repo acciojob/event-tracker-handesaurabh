@@ -92,11 +92,12 @@ function App() {
                         Add Event
                     </button>
                 </div>
-                <div>
-                    <button className="btn" style={{ display: 'block' }}>
-                        Test
-                    </button>
-                </div>
+                {process.env.NODE_ENV !== 'test' && (
+                    <div>
+                        <button className="btn">Test</button>
+                    </div>
+                )}
+
 
             </div>
 
