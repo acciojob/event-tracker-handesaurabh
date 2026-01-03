@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import BigCalendar, { momentLocalizer } from 'react-big-calendar';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../styles/App.css";
@@ -58,7 +58,7 @@ function App() {
             }
         };
     };
-
+    console.log('NODE_ENV:', process.env.NODE_ENV);
     return (
         <div className="App">
             <div className="filter-buttons">
@@ -102,7 +102,7 @@ function App() {
             </div>
 
 
-            <BigCalendar
+            <Calendar
                 localizer={localizer}
                 events={filteredEvents}
                 startAccessor="start"
