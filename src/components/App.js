@@ -1,265 +1,135 @@
-import React, { useState } from "react";
-import BigCalendar from "react-big-calendar";
-import moment from "moment";
+import React, { useState } from 'react';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../styles/App.css";
-import "react-big-calendar/lib/css/react-big-calendar.css";
 
-const localizer = BigCalendar.momentLocalizer(moment);
+const localizer = momentLocalizer(moment);
 
-const App = () => {
-    const [events, setEvents] = useState([
-        {
-            id: 1,
-            title: "Past Event",
-            location: "Past Location",
-            start: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-            end: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000)
-        },
-        {
-            id: 2,
-            title: "Upcoming Event", 
-            location: "Future Location",
-            start: new Date(Date.now() + 24 * 60 * 60 * 1000),
-            end: new Date(Date.now() + 24 * 60 * 60 * 1000 + 60 * 60 * 1000)
-        }
-    ]);
-
-    const [filter, setFilter] = useState("all");
+function App() {
+    const [events, setEvents] = useState([]);
+    const [selectedDate, setSelectedDate] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
-    const [showPopup, setShowPopup] = useState(false);
-    const [popupType, setPopupType] = useState("");
-    const [newEvent, setNewEvent] = useState({
-        title: "",
-        location: "",
-        start: new Date(),
-        end: new Date()
-    });
-
-    const filteredEvents = events.filter((event) => {
-        const now = new Date();
-        if (filter === "past") return event.end < now;
-        if (filter === "upcoming") return event.start >= now;
-        return true;
-    });
+    const [filter, setFilter] = useState('All');
+    const [popupType, setPopupType] = useState(null); // 'create', 'edit'
 
     const handleSelectSlot = (slotInfo) => {
-        setNewEvent({
-            title: "",
-            location: "",
-            start: slotInfo.start,
-            end: slotInfo.end
-        });
-        setPopupType("create");
-        setShowPopup(true);
+        setSelectedDate(slotInfo.start);
+        setPopupType('create');
     };
 
     const handleSelectEvent = (event) => {
         setSelectedEvent(event);
-        setNewEvent({
-            title: event.title,
-            location: event.location,
-            start: event.start,
-            end: event.end
-        });
-        setPopupType("edit");
-        setShowPopup(true);
+        setPopupType('edit');
     };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setNewEvent(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
-
-    const handleSaveEvent = () => {
-        if (popupType === "create") {
-            const event = {
+    const saveNewEvent = () => {
+        const title = document.getElementById('eventTitle').value;
+        const location = document.getElementById('eventLocation').value;
+        if (title) {
+            const newEvent = {
                 id: Date.now(),
-                title: newEvent.title,
-                location: newEvent.location,
-                start: newEvent.start,
-                end: newEvent.end
+                title,
+                start: selectedDate,
+                end: moment(selectedDate).add(1, 'hour').toDate(),
+                location
             };
-            setEvents(prev => [...prev, event]);
-        } else if (popupType === "edit" && selectedEvent) {
-            setEvents(prev =>
-                prev.map(event =>
-                    event.id === selectedEvent.id
-                        ? { ...event, title: newEvent.title, location: newEvent.location }
-                        : event
-                )
-            );
-        }
-        setShowPopup(false);
-        setNewEvent({ title: "", location: "", start: new Date(), end: new Date() });
-        setSelectedEvent(null);
-    };
-
-    const handleDeleteEvent = () => {
-        if (selectedEvent) {
-            setEvents(prev => prev.filter(event => event.id !== selectedEvent.id));
-            setShowPopup(false);
-            setSelectedEvent(null);
+            setEvents([...events, newEvent]);
+            setPopupType(null);
         }
     };
 
-    const handleClosePopup = () => {
-        setShowPopup(false);
-        setNewEvent({ title: "", location: "", start: new Date(), end: new Date() });
-        setSelectedEvent(null);
+    const saveEditedEvent = () => {
+        const newTitle = document.getElementById('editEventTitle').value;
+        setEvents(events.map(e => e.id === selectedEvent.id ? { ...e, title: newTitle } : e));
+        setPopupType(null);
     };
+
+    const deleteEvent = () => {
+        setEvents(events.filter(e => e.id !== selectedEvent.id));
+        setPopupType(null);
+    };
+
+    const filteredEvents = events.filter(event => {
+        const now = new Date();
+        const isPast = moment(event.start).isBefore(now);
+        if (filter === 'All') return true;
+        if (filter === 'Past') return isPast;
+        if (filter === 'Upcoming') return !isPast;
+        return true;
+    });
 
     const eventStyleGetter = (event) => {
         const now = new Date();
-        const backgroundColor =
-            event.end < now ? "rgb(222, 105, 135)" : "rgb(140, 189, 76)";
-
-        return { style: { backgroundColor } };
+        const isPast = moment(event.start).isBefore(now);
+        return {
+            style: {
+                backgroundColor: isPast ? 'rgb(222, 105, 135)' : 'rgb(140, 189, 76)',
+                borderRadius: '0px',
+                opacity: 0.8,
+                color: 'white',
+                border: '0px',
+                display: 'block'
+            }
+        };
     };
 
     return (
-        <div>
-            {/* Do not remove the main div */}
-            <div data-cy="filter-buttons" style={{ marginBottom: "20px" }}>
-                <button className="btn" onClick={() => setFilter("all")}>All</button>
-                <button className="btn" onClick={() => setFilter("past")}>Past</button>
-                <button className="btn" onClick={() => setFilter("upcoming")}>Upcoming</button>
-                <button
-                    className="btn"
-                    onClick={() => {}}
-                    data-cy="cypress-upcoming-event-test"
-                >
-                    Upcoming Event
-                </button>
-                <button
-                    className="btn"
-                    onClick={() => {}}
-                    data-cy="cypress-past-event-test"
-                >
-                    Past Event
-                </button>
+        <div className="App">
+            <div className="filter-buttons">
+                <button className="btn" onClick={() => setFilter('All')}>All</button>
+                <button className="btn" onClick={() => setFilter('Past')}>Past</button>
+                <button className="btn" onClick={() => setFilter('Upcoming')}>Upcoming</button>
             </div>
-
-            <BigCalendar
+            <Calendar
                 localizer={localizer}
                 events={filteredEvents}
                 startAccessor="start"
                 endAccessor="end"
-                selectable
                 style={{ height: 500 }}
-                defaultDate={new Date()}
                 onSelectSlot={handleSelectSlot}
+                selectable
                 onSelectEvent={handleSelectEvent}
-                eventStyleGetter={eventStyleGetter}
+                eventPropGetter={eventStyleGetter}
             />
 
-            <div data-testid="event-list" style={{ display: "none" }}>
-                {filteredEvents.map(event => {
-                    const isPast = event.end < new Date();
-                    return (
-                        <button
-                            key={event.id}
-                            style={{
-                                backgroundColor: isPast ? "rgb(222, 105, 135)" : "rgb(140, 189, 76)",
-                                color: "#fff",
-                                margin: "5px",
-                                padding: "6px 10px",
-                                border: "none"
-                            }}
-                            data-cy={isPast ? "past-event" : "upcoming-event"} 
-                        >
-                            {event.title}
-                        </button>
-                    );
-                })}
-                <button
-                    style={{ backgroundColor: "rgb(222, 105, 135)" }}
-                    aria-hidden="true"
-                    data-cy="cypress-past-event-test"
-                >
-                    Past Event
-                </button>
-                <button
-                    style={{ backgroundColor: "rgb(140, 189, 76)" }}
-                    aria-hidden="true"
-                    data-cy="cypress-upcoming-event-test"
-                >
-                    Upcoming Event
-                </button>
-            </div>
+            {popupType && <div className="mm-popup__overlay" onClick={() => setPopupType(null)}></div>}
 
-            {showPopup && (
-                <div className="mm-popup-overlay" onClick={handleClosePopup}>
-                    <div className="mm-popup__box" onClick={(e) => e.stopPropagation()}>
-                        <div className="mm-popup__box__header">
-                            {popupType === "create" ? "Create Event" : "Edit Event"}
+            {popupType === 'create' && (
+                <div className="mm-popup__box">
+                    <div className="mm-popup__box__header">
+                        Create Event
+                    </div>
+                    <div className="mm-popup__box__body">
+                        <input id="eventTitle" placeholder="Event Title" />
+                        <input id="eventLocation" placeholder="Event Location" />
+                    </div>
+                    <div className="mm-popup__box__footer">
+                        <div className="mm-popup__box__footer__right-space">
+                            <button className="mm-popup__btn" onClick={saveNewEvent}>Save</button>
                         </div>
+                    </div>
+                </div>
+            )}
 
-                        <div className="mm-popup__box__body">
-                            <input
-                                type="text"
-                                placeholder="Event Title"
-                                name="title"
-                                value={newEvent.title}
-                                onChange={handleInputChange}
-                                style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-                            />
-                            <input
-                                type="text"
-                                placeholder="Event Location"
-                                name="location"
-                                value={newEvent.location}
-                                onChange={handleInputChange}
-                                style={{ width: "100%", marginBottom: "10px", padding: "5px" }}
-                            />
+            {popupType === 'edit' && (
+                <div className="mm-popup__box">
+                    <div className="mm-popup__box__header">
+                        Edit Event
+                    </div>
+                    <div className="mm-popup__box__body">
+                        <input id="editEventTitle" defaultValue={selectedEvent.title} />
+                    </div>
+                    <div className="mm-popup__box__footer">
+                        <div className="mm-popup__box__footer__right-space">
+                            <button className="mm-popup__btn" onClick={saveEditedEvent}>Save</button>
                         </div>
-
-                        <div className="mm-popup__box__footer">
-                            <div className="mm-popup__box__footer__left">
-                                {popupType === "edit" && (
-                                    <>
-                                        <button
-                                            className="mm-popup__btn mm-popup__btn--info"
-                                            onClick={handleSaveEvent}
-                                        >
-                                            Edit
-                                        </button>
-
-                                        <button
-                                            className="mm-popup__btn mm-popup__btn--danger"
-                                            onClick={handleDeleteEvent}
-                                        >
-                                            Delete
-                                        </button>
-                                    </>
-                                )}
-                            </div>
-
-                            <div className="mm-popup__box__footer__right">
-                                <button
-                                    className="mm-popup__btn mm-popup__btn--secondary"
-                                    onClick={handleClosePopup}
-                                >
-                                    Cancel
-                                </button>
-
-                                <div className="mm-popup__box__footer__right-space">
-                                    <button
-                                        className="mm-popup__btn mm-popup__btn--success"
-                                        onClick={handleSaveEvent}
-                                    >
-                                        Save
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <button className="mm-popup__btn--danger" onClick={deleteEvent}>Delete</button>
                     </div>
                 </div>
             )}
         </div>
     );
-};
+}
 
 export default App;
