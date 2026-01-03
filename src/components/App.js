@@ -75,7 +75,7 @@ function App() {
                 </div>
 
                 <div>
-                    <button className="btn" onClick={() => setFilter('Upcoming')}>
+                    <button style={{ backgroundColor: 'rgb(140, 189, 76)' }} className="btn" onClick={() => setFilter('Upcoming')}>
                         Upcoming
                     </button>
                 </div>
