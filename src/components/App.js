@@ -25,21 +25,19 @@ function App() {
 
     const saveNewEvent = () => {
         const title = document.getElementById('eventTitle').value;
-        const location = document.getElementById('eventLocation').value;
-
         if (!title) return;
 
         const newEvent = {
             id: Date.now(),
             title,
             start: selectedDate,
-            end: moment(selectedDate).add(1, 'hour').toDate(),
-            location
+            end: moment(selectedDate).add(1, 'hour').toDate()
         };
 
         setEvents([...events, newEvent]);
         setPopupType(null);
     };
+
 
     const saveEditedEvent = () => {
         const newTitle = document.getElementById('editEventTitle').value;
@@ -135,7 +133,6 @@ function App() {
 
                     <div className="mm-popup__box__body">
                         <input id="eventTitle" placeholder="Event Title" />
-                        <input id="eventLocation" placeholder="Event Location" />
                     </div>
 
                     <div className="mm-popup__box__footer">
@@ -150,6 +147,7 @@ function App() {
                     </div>
                 </div>
             )}
+
 
         </div>
     );
