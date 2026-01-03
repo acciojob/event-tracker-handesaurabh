@@ -132,14 +132,6 @@ function App() {
                 }}
             />
 
-            {popupType && (
-                <div
-                    className="mm-popup__overlay"
-                    onClick={() => setPopupType(null)}
-                />
-            )}
-
-
             {popupType === 'create' && (
                 <div className="mm-popup__box">
                     <div className="mm-popup__box__header">
@@ -160,35 +152,6 @@ function App() {
                                 Save
                             </button>
                         </div>
-                    </div>
-                </div>
-            )}
-
-            {popupType === 'edit' && (
-                <div className="mm-popup__box">
-                    <div className="mm-popup__box__header">
-                        Edit Event
-                    </div>
-
-                    <div className="mm-popup__box__body">
-                        <input id="editEventTitle" defaultValue={selectedEvent?.title || ''} />
-                    </div>
-
-                    <div className="mm-popup__box__footer">
-                        <div className="mm-popup__box__footer__right-space">
-                            <button
-                                className="mm-popup__btn--info"
-                                onClick={saveEditedEvent}
-                            >
-                                Save
-                            </button>
-                        </div>
-                        <button
-                            className="mm-popup__btn--danger"
-                            onClick={deleteEvent}
-                        >
-                            Delete
-                        </button>
                     </div>
                 </div>
             )}
