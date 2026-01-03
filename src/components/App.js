@@ -106,7 +106,7 @@ function App() {
                     </div>
                     <div className="mm-popup__box__footer">
                         <div className="mm-popup__box__footer__right-space">
-                            <button className="mm-popup__btn" onClick={saveNewEvent}>Save</button>
+                            <button className="btn mm-popup__btn" onClick={saveNewEvent}>Save</button>
                         </div>
                     </div>
                 </div>
@@ -122,9 +122,9 @@ function App() {
                     </div>
                     <div className="mm-popup__box__footer">
                         <div className="mm-popup__box__footer__right-space">
-                            <button className="mm-popup__btn" onClick={saveEditedEvent}>Save</button>
+                            <button className="btn mm-popup__btn" onClick={saveEditedEvent}>Save</button>
                         </div>
-                        <button className="mm-popup__btn--danger" onClick={deleteEvent}>Delete</button>
+                        <button className="btn mm-popup__btn--danger" onClick={deleteEvent}>Delete</button>
                     </div>
                 </div>
             )}
