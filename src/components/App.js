@@ -102,6 +102,7 @@ function App() {
 
                     <div className="mm-popup__box__body">
                         <input id="eventTitle" placeholder="Event Title" />
+                        <input id="eventLocation" placeholder="Event Location" />
                     </div>
 
                     <div className="mm-popup__box__footer">
