@@ -82,6 +82,7 @@ function App() {
 
                 <div>
                     <button
+                        style={{ backgroundColor: 'rgb(222, 105, 135)' }}
                         className="btn"
                         onClick={() => {
                             setSelectedDate(new Date());
