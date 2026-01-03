@@ -42,12 +42,7 @@ module.exports = (env, argv) => { // Accept env/argv from CLI
         resolve: {
             extensions: ['.js', '.jsx']
         },
-        devServer: { // Add devServer for npm start
-            port: 3000,
-            open: true,
-            hot: true,
-            static: path.join(__dirname, 'dist')
-        },
+
         node: {
             crypto: 'empty',
             stream: 'empty'
