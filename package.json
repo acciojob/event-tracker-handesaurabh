@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
  "scripts": {
-    "test": "cross-env NODE_ENV=test jest --no-color 2>output.txt",
-    "start": "webpack-dev-server --mode development --watch --open --hot",
-    "build": "webpack --mode production"
+     "start": "webpack-dev-server --mode development --watch --open --hot",
+    "start:test": "cross-env NODE_ENV=test webpack-dev-server --mode development --watch --open --hot",
+    "build": "webpack --mode production",
+    "cypress:open": "cypress open",
+    "test:e2e": "start-server-and-test start:test http://localhost:8080 'cypress open'",
+    "test": "cross-env NODE_ENV=test jest --no-color 2>output.txt"
   },
   "keywords": [],
   "author": "",
