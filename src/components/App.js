@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
+import BigCalendar, { momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../styles/App.css";
@@ -81,7 +81,7 @@ function App() {
                 <button className="btn" onClick={() => setFilter('Past')}>Past</button>
                 <button className="btn" onClick={() => setFilter('Upcoming')}>Upcoming</button>
             </div>
-            <Calendar
+            <BigCalendar
                 localizer={localizer}
                 events={filteredEvents}
                 startAccessor="start"
