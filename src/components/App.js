@@ -92,7 +92,7 @@ function App() {
                         Add Event
                     </button>
                 </div>
-                <button className="btn" style={{ display: 'none' }}>Test</button>
+                <div><button className="btn" style={{ display: 'none' }}>Test</button></div>
             </div>
 
 
