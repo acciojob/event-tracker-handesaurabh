@@ -38,20 +38,6 @@ function App() {
         setPopupType(null);
     };
 
-
-    const saveEditedEvent = () => {
-        const newTitle = document.getElementById('editEventTitle').value;
-        setEvents(events.map(e =>
-            e.id === selectedEvent.id ? { ...e, title: newTitle } : e
-        ));
-        setPopupType(null);
-    };
-
-    const deleteEvent = () => {
-        setEvents(events.filter(e => e.id !== selectedEvent.id));
-        setPopupType(null);
-    };
-
     const filteredEvents = events.filter(event => {
         const now = new Date();
         const isPast = moment(event.start).isBefore(now);
@@ -78,8 +64,6 @@ function App() {
                 <button className="btn" onClick={() => setFilter('All')}>All</button>
                 <button className="btn" onClick={() => setFilter('Past')}>Past</button>
                 <button className="btn" onClick={() => setFilter('Upcoming')}>Upcoming</button>
-
-                {/* REQUIRED 4th BUTTON FOR CYPRESS */}
                 <button
                     className="btn"
                     onClick={() => {
@@ -132,37 +116,6 @@ function App() {
                     </div>
                 </div>
             )}
-
-            {popupType === 'edit' && (
-                <div className="mm-popup__box">
-                    <div className="mm-popup__box__header">
-                        Edit Event
-                    </div>
-
-                    <div className="mm-popup__box__body">
-                        <input id="editEventTitle" defaultValue={selectedEvent?.title || ''} />
-                    </div>
-
-                    <div className="mm-popup__box__footer">
-                        <div className="mm-popup__box__footer__right-space">
-                            <button
-                                className="mm-popup__btn"
-                                onClick={saveEditedEvent}
-                            >
-                                Save
-                            </button>
-                        </div>
-                        <button
-                            className="mm-popup__btn--danger"
-                            onClick={deleteEvent}
-                        >
-                            Delete
-                        </button>
-                    </div>
-                </div>
-            )}
-
-
         </div>
     );
 }
