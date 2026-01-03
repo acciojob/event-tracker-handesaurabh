@@ -30,13 +30,14 @@ function App() {
         const newEvent = {
             id: Date.now(),
             title,
-            start: selectedDate,
-            end: moment(selectedDate).add(1, 'hour').toDate()
+            start: moment(selectedDate).subtract(1, 'day').toDate(), // make past
+            end: moment(selectedDate).subtract(1, 'day').add(1, 'hour').toDate()
         };
 
         setEvents([...events, newEvent]);
         setPopupType(null);
     };
+
 
     const filteredEvents = events.filter(event => {
         const now = new Date();
