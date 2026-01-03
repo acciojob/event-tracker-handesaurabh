@@ -1,0 +1,137 @@
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+FAIL ./temp_test.spec.js
+  Calendar App
+    × adding events and validating events (2 ms)
+    × should be able to edit events (1 ms)
+    × should be able to delete events
+    × should filter events correctly (1 ms)
+
+  ● Calendar App › adding events and validating events
+
+    ReferenceError: cy is not defined
+
+      1 | describe('Calendar App', () => {
+      2 |   beforeEach(() => {
+    > 3 |     cy.visit('http://localhost:8080');
+        |     ^
+      4 |   });
+      5 | 
+      6 |   it('adding events and validating events', () => {
+
+      at Object.<anonymous> (temp_test.spec.js:3:5)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  ● Calendar App › adding events and validating events
+
+    ReferenceError: cy is not defined
+
+       6 |   it('adding events and validating events', () => {
+       7 |     // Click on a date in the calendar
+    >  8 |     cy.get('.rbc-day-bg').first().click();
+         |     ^
+       9 |     
+      10 |     // Wait for popup to appear
+      11 |     cy.get('.mm-popup-overlay').should('be.visible');
+
+      at Object.<anonymous> (temp_test.spec.js:8:5)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  ● Calendar App › should be able to edit events
+
+    ReferenceError: cy is not defined
+
+      1 | describe('Calendar App', () => {
+      2 |   beforeEach(() => {
+    > 3 |     cy.visit('http://localhost:8080');
+        |     ^
+      4 |   });
+      5 | 
+      6 |   it('adding events and validating events', () => {
+
+      at Object.<anonymous> (temp_test.spec.js:3:5)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  ● Calendar App › should be able to edit events
+
+    ReferenceError: cy is not defined
+
+      24 |   it('should be able to edit events', () => {
+      25 |     // Create an event first
+    > 26 |     cy.get('.rbc-day-bg').first().click();
+         |     ^
+      27 |     cy.get('.mm-popup-overlay').should('be.visible');
+      28 |     cy.get('input[name="title"]').type('Original Event');
+      29 |     cy.get('input[name="location"]').type('Original Location');
+
+      at Object.<anonymous> (temp_test.spec.js:26:5)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  ● Calendar App › should be able to delete events
+
+    ReferenceError: cy is not defined
+
+      1 | describe('Calendar App', () => {
+      2 |   beforeEach(() => {
+    > 3 |     cy.visit('http://localhost:8080');
+        |     ^
+      4 |   });
+      5 | 
+      6 |   it('adding events and validating events', () => {
+
+      at Object.<anonymous> (temp_test.spec.js:3:5)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  ● Calendar App › should be able to delete events
+
+    ReferenceError: cy is not defined
+
+      44 |   it('should be able to delete events', () => {
+      45 |     // Create an event first
+    > 46 |     cy.get('.rbc-day-bg').eq(5).click(); // Click on a different date
+         |     ^
+      47 |     cy.get('.mm-popup-overlay').should('be.visible');
+      48 |     cy.get('input[name="title"]').type('Event to Delete');
+      49 |     cy.get('input[name="location"]').type('Delete Location');
+
+      at Object.<anonymous> (temp_test.spec.js:46:5)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  ● Calendar App › should filter events correctly
+
+    ReferenceError: cy is not defined
+
+      1 | describe('Calendar App', () => {
+      2 |   beforeEach(() => {
+    > 3 |     cy.visit('http://localhost:8080');
+        |     ^
+      4 |   });
+      5 | 
+      6 |   it('adding events and validating events', () => {
+
+      at Object.<anonymous> (temp_test.spec.js:3:5)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  ● Calendar App › should filter events correctly
+
+    ReferenceError: cy is not defined
+
+      62 |   it('should filter events correctly', () => {
+      63 |     // Test All filter
+    > 64 |     cy.get('.btn').eq(0).click();
+         |     ^
+      65 |     
+      66 |     // Test Past filter
+      67 |     cy.get('.btn').eq(1).click();
+
+      at Object.<anonymous> (temp_test.spec.js:64:5)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 4 total
+Snapshots:   0 total
+Time:        4.406 s
+Ran all test suites.

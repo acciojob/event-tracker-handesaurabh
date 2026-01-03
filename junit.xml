@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="4" failures="4" time="4.408">
+  <testsuite name="Calendar App" errors="0" failures="4" skipped="0" timestamp="2026-01-03T16:05:49" time="2.505" tests="4">
+    <testcase classname="Calendar App adding events and validating events" name="Calendar App adding events and validating events" time="0.002">
+      <failure>ReferenceError: cy is not defined
+    at Object.&lt;anonymous&gt; (D:\modules\event-tracker-handesaurabh\temp_test.spec.js:3:5)
+    at Object.asyncJestLifecycle (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\jasmineAsyncInstall.js:58:37)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:45:12
+    at new Promise (&lt;anonymous&gt;)
+    at mapper (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:28:19)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:75:41
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+      <failure>ReferenceError: cy is not defined
+    at Object.&lt;anonymous&gt; (D:\modules\event-tracker-handesaurabh\temp_test.spec.js:8:5)
+    at Object.asyncJestTest (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\jasmineAsyncInstall.js:106:37)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:45:12
+    at new Promise (&lt;anonymous&gt;)
+    at mapper (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:28:19)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:75:41
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="Calendar App should be able to edit events" name="Calendar App should be able to edit events" time="0.001">
+      <failure>ReferenceError: cy is not defined
+    at Object.&lt;anonymous&gt; (D:\modules\event-tracker-handesaurabh\temp_test.spec.js:3:5)
+    at Object.asyncJestLifecycle (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\jasmineAsyncInstall.js:58:37)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:45:12
+    at new Promise (&lt;anonymous&gt;)
+    at mapper (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:28:19)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:75:41
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+      <failure>ReferenceError: cy is not defined
+    at Object.&lt;anonymous&gt; (D:\modules\event-tracker-handesaurabh\temp_test.spec.js:26:5)
+    at Object.asyncJestTest (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\jasmineAsyncInstall.js:106:37)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:45:12
+    at new Promise (&lt;anonymous&gt;)
+    at mapper (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:28:19)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:75:41
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="Calendar App should be able to delete events" name="Calendar App should be able to delete events" time="0">
+      <failure>ReferenceError: cy is not defined
+    at Object.&lt;anonymous&gt; (D:\modules\event-tracker-handesaurabh\temp_test.spec.js:3:5)
+    at Object.asyncJestLifecycle (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\jasmineAsyncInstall.js:58:37)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:45:12
+    at new Promise (&lt;anonymous&gt;)
+    at mapper (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:28:19)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:75:41
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+      <failure>ReferenceError: cy is not defined
+    at Object.&lt;anonymous&gt; (D:\modules\event-tracker-handesaurabh\temp_test.spec.js:46:5)
+    at Object.asyncJestTest (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\jasmineAsyncInstall.js:106:37)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:45:12
+    at new Promise (&lt;anonymous&gt;)
+    at mapper (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:28:19)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:75:41
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="Calendar App should filter events correctly" name="Calendar App should filter events correctly" time="0.001">
+      <failure>ReferenceError: cy is not defined
+    at Object.&lt;anonymous&gt; (D:\modules\event-tracker-handesaurabh\temp_test.spec.js:3:5)
+    at Object.asyncJestLifecycle (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\jasmineAsyncInstall.js:58:37)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:45:12
+    at new Promise (&lt;anonymous&gt;)
+    at mapper (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:28:19)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:75:41
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+      <failure>ReferenceError: cy is not defined
+    at Object.&lt;anonymous&gt; (D:\modules\event-tracker-handesaurabh\temp_test.spec.js:64:5)
+    at Object.asyncJestTest (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\jasmineAsyncInstall.js:106:37)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:45:12
+    at new Promise (&lt;anonymous&gt;)
+    at mapper (D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:28:19)
+    at D:\modules\event-tracker-handesaurabh\node_modules\jest-jasmine2\build\queueRunner.js:75:41
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -112,18 +112,27 @@ function App() {
 
             {popupType === 'create' && (
                 <div className="mm-popup__box">
-                    <div className="mm-popup__box__header">Create Event</div>
+                    <div className="mm-popup__box__header">
+                        Create Event
+                    </div>
+
                     <div className="mm-popup__box__body">
                         <input id="eventTitle" placeholder="Event Title" />
-                        <input id="eventLocation" placeholder="Event Location" />
                     </div>
+
                     <div className="mm-popup__box__footer">
-                        <button className="btn mm-popup__btn" onClick={saveNewEvent}>
-                            Save
-                        </button>
+                        <div className="mm-popup__box__footer__right-space">
+                            <button
+                                className="mm-popup__btn"
+                                onClick={saveNewEvent}
+                            >
+                                Save
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
+
 
             {popupType === 'create' && (
                 <div className="mm-popup__box">
