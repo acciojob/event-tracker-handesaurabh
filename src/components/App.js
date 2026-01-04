@@ -107,7 +107,7 @@ function App() {
 
                 {process.env.NODE_ENV !== 'test' && (
                     <div>
-                        <button className='btn'>Test</button>
+                        <button className='filter-btn'>Test</button>
                     </div>
                 )}
 
