@@ -95,7 +95,7 @@ function App() {
                 <div>
                     <button
                         style={{ backgroundColor: 'rgb(222, 105, 135)' }}
-                        className="filter-btn"
+                        className="btn"
                         onClick={() => {
                             setSelectedDate(new Date());
                             setPopupType('create');
