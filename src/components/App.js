@@ -127,12 +127,16 @@ function App() {
                 eventPropGetter={eventStyleGetter}
                 components={{
                     event: ({ event }) => (
-                        <button style={eventStyleGetter(event).style} className="btn">
+                        <span
+                            style={eventStyleGetter(event).style}
+                            className="calendar-event"
+                        >
                             {event.title}
-                        </button>
+                        </span>
                     )
                 }}
             />
+
 
             {popupType === 'create' && (
                 <div className="mm-popup__box">
