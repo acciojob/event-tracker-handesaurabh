@@ -104,11 +104,7 @@ function App() {
                         Add Event
                     </button>
                 </div>
-                <div>
-                    <button className="btn">
-                        {events.length}
-                    </button>
-                </div>
+
                 {process.env.NODE_ENV !== 'test' && (
                     <div>
                         <button className="btn">Test</button>
