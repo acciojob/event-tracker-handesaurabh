@@ -75,19 +75,19 @@ function App() {
         <div className="App">
             <div className="filter-buttons">
                 <div>
-                    <button className="filter-btn" onClick={() => setFilter('All')}>
+                    <button className="btn" onClick={() => setFilter('All')}>
                         All
                     </button>
                 </div>
 
                 <div>
-                    <button className="filter-btn" onClick={() => setFilter('Past')}>
+                    <button className="btn" onClick={() => setFilter('Past')}>
                         Past
                     </button>
                 </div>
 
                 <div>
-                    <button style={{ backgroundColor: 'rgb(140, 189, 76)' }} className="filter-btn" onClick={() => setFilter('Upcoming')}>
+                    <button style={{ backgroundColor: 'rgb(140, 189, 76)' }} className="btn" onClick={() => setFilter('Upcoming')}>
                         Upcoming
                     </button>
                 </div>
