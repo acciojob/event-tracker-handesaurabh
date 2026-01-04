@@ -105,15 +105,16 @@ function App() {
                     </button>
                 </div>
 
-                {process.env.NODE_ENV !== 'test' && (
-                    <div>
-                        <button className='filter-btn'>Test</button>
-                    </div>
-                )}
-
                 <div>
-                    <button className='btn'>1</button>
+                    <button
+                        className="btn"
+                        style={{ display: process.env.NODE_ENV === 'test' ? 'none' : 'inline-block' }}
+                    >
+                        Test
+                    </button>
                 </div>
+
+
 
             </div>
 
