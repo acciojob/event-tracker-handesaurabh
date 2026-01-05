@@ -76,13 +76,23 @@ function App() {
     return (
         <div className="App">
             <div className="filter-buttons">
-                {/* Always visible button for Cypress */}
                 <button
-                    className="btn"
-                    style={{ display: 'inline-block', zIndex: 1000, position: 'relative' }}
+                    id="test-btn"
+                    data-cy="test-btn"
+                    style={{
+                        display: 'inline-block',
+                        position: 'relative',
+                        zIndex: 9999,
+                        width: '50px',
+                        height: '30px',
+                        textAlign: 'center',
+                        lineHeight: '30px',
+                        backgroundColor: '#eee'
+                    }}
                 >
                     1
                 </button>
+
 
 
                 <button className="filter-btn" onClick={() => setFilter('All')}>
