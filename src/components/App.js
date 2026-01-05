@@ -105,13 +105,13 @@ function App() {
                     </button>
                 </div>
 
-              {process.env.NODE_ENV !== 'test' && (
-  <div>
-    <button className="btn">
-      Test
-    </button>
-  </div>
-)}
+                {process.env.NODE_ENV !== 'test' && (
+                    <div>
+                        <button className="btn">
+                            Test
+                        </button>
+                    </div>
+                )}
 
 
             </div>
