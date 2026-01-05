@@ -108,13 +108,9 @@ function App() {
                     </button>
                 </div>
 
-                {showTestBtn && (
-                    <div>
-                        <button className="btn">
-                            {events.length}
-                        </button>
-                    </div>
-                )}
+                <div>
+                    <button className="btn">Test</button>
+                </div>
 
 
 
