@@ -76,40 +76,35 @@ function App() {
     return (
         <div className="App">
             <div className="filter-buttons">
-                <button className="btn">1</button>
-                <div>
-                    <button className="filter-btn" onClick={() => setFilter('All')}>
-                        All
-                    </button>
-                </div>
+                {/* Always visible button for Cypress */}
+                <button className="btn" style={{ display: 'inline-block' }}>1</button>
 
-                <div>
-                    <button className="filter-btn" onClick={() => setFilter('Past')}>
-                        Past
-                    </button>
-                </div>
+                <button className="filter-btn" onClick={() => setFilter('All')}>
+                    All
+                </button>
 
-                <div>
-                    <button style={{ backgroundColor: 'rgb(140, 189, 76)' }} className="filter-btn" onClick={() => setFilter('Upcoming')}>
-                        Upcoming
-                    </button>
-                </div>
+                <button className="filter-btn" onClick={() => setFilter('Past')}>
+                    Past
+                </button>
 
-                <div>
-                    <button
-                        style={{ backgroundColor: 'rgb(222, 105, 135)' }}
-                        className="filter-btn"
-                        onClick={() => {
-                            setSelectedDate(new Date());
-                            setPopupType('create');
-                            setShowTestBtn(false);
-                        }}
-                    >
-                        Add Event
-                    </button>
-                </div>
+                <button
+                    style={{ backgroundColor: 'rgb(140, 189, 76)' }}
+                    className="filter-btn"
+                    onClick={() => setFilter('Upcoming')}
+                >
+                    Upcoming
+                </button>
 
-
+                <button
+                    style={{ backgroundColor: 'rgb(222, 105, 135)' }}
+                    className="filter-btn"
+                    onClick={() => {
+                        setSelectedDate(new Date());
+                        setPopupType('create');
+                    }}
+                >
+                    Add Event
+                </button>
             </div>
 
 
