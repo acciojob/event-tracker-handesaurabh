@@ -77,21 +77,21 @@ function App() {
         <div className="App">
             <div className="filter-buttons">
                 <button
-                    id="test-btn"
                     data-cy="test-btn"
                     style={{
                         display: 'inline-block',
                         position: 'relative',
                         zIndex: 9999,
-                        width: '50px',
+                        width: '40px',
                         height: '30px',
-                        textAlign: 'center',
                         lineHeight: '30px',
+                        textAlign: 'center',
                         backgroundColor: '#eee'
                     }}
                 >
                     1
                 </button>
+
 
 
 
