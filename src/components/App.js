@@ -12,6 +12,7 @@ function App() {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [filter, setFilter] = useState('All');
     const [popupType, setPopupType] = useState(null);
+    const [showTestBtn, setShowTestBtn] = useState(true);
 
     const handleSelectSlot = (slotInfo) => {
         setSelectedDate(slotInfo.start);
@@ -35,6 +36,7 @@ function App() {
         };
 
         setEvents([...events, newEvent]);
+
         setPopupType(null);
     };
 
@@ -99,19 +101,21 @@ function App() {
                         onClick={() => {
                             setSelectedDate(new Date());
                             setPopupType('create');
+                            setShowTestBtn(false);
                         }}
                     >
                         Add Event
                     </button>
                 </div>
 
-                {!window.Cypress && (
+                {showTestBtn && (
                     <div>
                         <button className="btn">
                             Test
                         </button>
                     </div>
                 )}
+
 
 
             </div>
