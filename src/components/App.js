@@ -77,6 +77,7 @@ function App() {
         <div className="App">
             <div className="filter-buttons">
                 <button
+                    className="btn"
                     data-cy="test-btn"
                     style={{
                         display: 'inline-block',
