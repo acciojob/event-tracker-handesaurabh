@@ -77,7 +77,13 @@ function App() {
         <div className="App">
             <div className="filter-buttons">
                 {/* Always visible button for Cypress */}
-                <button className="btn" style={{ display: 'inline-block' }}>1</button>
+                <button
+                    className="btn"
+                    style={{ display: 'inline-block', zIndex: 1000, position: 'relative' }}
+                >
+                    1
+                </button>
+
 
                 <button className="filter-btn" onClick={() => setFilter('All')}>
                     All
