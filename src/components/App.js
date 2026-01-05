@@ -111,7 +111,7 @@ function App() {
                 {showTestBtn && (
                     <div>
                         <button className="btn">
-                            Test
+                            {events.length}
                         </button>
                     </div>
                 )}
