@@ -76,6 +76,7 @@ function App() {
     return (
         <div className="App">
             <div className="filter-buttons">
+                <button className="btn">1</button>
                 <div>
                     <button className="filter-btn" onClick={() => setFilter('All')}>
                         All
@@ -107,11 +108,6 @@ function App() {
                         Add Event
                     </button>
                 </div>
-
-                <div>
-                    <button className="btn">1</button>
-                </div>
-
 
 
             </div>
