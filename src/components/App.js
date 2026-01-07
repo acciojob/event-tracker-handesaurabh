@@ -81,7 +81,7 @@ function App() {
     console.log('NODE_ENV:', process.env.NODE_ENV);
     return (
         <div className="App">
-            <ul className="filter-buttons">
+            <ul className="filter-buttons" style={{ zIndex: 1001 }}>
                 <li><button className="btn" onClick={() => setFilter('All')}>
                     All
                 </button></li>
