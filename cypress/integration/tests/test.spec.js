@@ -68,5 +68,8 @@ describe('Calendar App', () => {
 
         // Test Upcoming filter
         cy.get('.btn').eq(2).click();
+
+        // Test Add Event button
+        cy.get('.btn').eq(3).click();
     });
 });
