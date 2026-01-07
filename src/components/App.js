@@ -31,19 +31,19 @@ function App() {
     };
 
     const saveNewEvent = () => {
-        const title = document.getElementById('eventTitle').value;
-        const location = document.getElementById('eventLocation').value;
-        if (!title) return;
+        if (!newEventTitle) return;
 
         const newEvent = {
             id: Date.now(),
-            title,
-            location,
+            title: newEventTitle,
+            location: newEventLocation,
             start: selectedDate,
             end: moment(selectedDate).add(1, 'hour').toDate()
         };
 
         setEvents([...events, newEvent]);
+        setNewEventTitle('');
+        setNewEventLocation('');
         setPopupType(null);
     };
 
@@ -143,8 +143,8 @@ function App() {
                     </div>
 
                     <div className="mm-popup__box__body">
-                        <input id="eventTitle" name="title" placeholder="Event Title" />
-                        <input id="eventLocation" name="location" placeholder="Event Location" />
+                        <input id="eventTitle" name="title" placeholder="Event Title" value={newEventTitle} onChange={(e) => setNewEventTitle(e.target.value)} />
+                        <input id="eventLocation" name="location" placeholder="Event Location" value={newEventLocation} onChange={(e) => setNewEventLocation(e.target.value)} />
                     </div>
 
                     <div className="mm-popup__box__footer">
