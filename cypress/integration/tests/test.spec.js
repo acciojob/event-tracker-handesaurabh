@@ -17,6 +17,9 @@ describe('Calendar App', () => {
         // Click save button - using the specific selector from the error
         cy.get('.mm-popup__box__footer__right-space > .mm-popup__btn').click();
 
+        // Wait for popup to close
+        cy.get('.mm-popup-overlay').should('not.exist');
+
         // Verify event was added
         cy.contains('Test Event').should('be.visible');
     });
@@ -28,6 +31,7 @@ describe('Calendar App', () => {
         cy.get('input[name="title"]').type('Original Event');
         cy.get('input[name="location"]').type('Original Location');
         cy.get('.mm-popup__btn--success').click();
+        cy.get('.mm-popup-overlay').should('not.exist');
 
         // Click on the event to edit it
         cy.contains('Original Event').click();
@@ -36,6 +40,7 @@ describe('Calendar App', () => {
         cy.get('input[name="title"]').clear().type('Updated Event');
         cy.get('input[name="location"]').clear().type('Updated Location');
         cy.get('.mm-popup__btn--success').click();
+        cy.get('.mm-popup-overlay').should('not.exist');
 
         // Verify event was updated
         cy.contains('Updated Event').should('be.visible');
@@ -48,12 +53,14 @@ describe('Calendar App', () => {
         cy.get('input[name="title"]').type('Event to Delete');
         cy.get('input[name="location"]').type('Delete Location');
         cy.get('.mm-popup__btn--success').click();
+        cy.get('.mm-popup-overlay').should('not.exist');
 
         // Click on the event to delete it
         cy.contains('Event to Delete').click();
 
         // Click delete button
         cy.get('.mm-popup__btn--danger').click();
+        cy.get('.mm-popup-overlay').should('not.exist');
 
         // Verify event was deleted
         cy.contains('Event to Delete').should('not.exist');
