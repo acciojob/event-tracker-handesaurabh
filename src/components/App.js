@@ -44,7 +44,7 @@ function App() {
         };
 
         setEvents([...events, newEvent]);
-        setPopupType(null);
+        setTimeout(() => setPopupType(null), 0);
     };
 
     const saveEditedEvent = () => {
