@@ -70,7 +70,7 @@
 }
 
 /* Overlay to dim background */
-.mm-popup__overlay {
+.mm-popup-overlay {
   position: fixed;
   top: 0;
   left: 0;

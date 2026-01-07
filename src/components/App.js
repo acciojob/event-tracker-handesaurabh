@@ -26,11 +26,13 @@ function App() {
 
     const saveNewEvent = () => {
         const title = document.getElementById('eventTitle').value;
+        const location = document.getElementById('eventLocation').value;
         if (!title) return;
 
         const newEvent = {
             id: Date.now(),
             title,
+            location,
             start: selectedDate,
             end: moment(selectedDate).add(1, 'hour').toDate()
         };
@@ -42,8 +44,9 @@ function App() {
 
     const saveEditedEvent = () => {
         const newTitle = document.getElementById('editEventTitle').value;
+        const newLocation = document.getElementById('editEventLocation').value;
         setEvents(events.map(e =>
-            e.id === selectedEvent.id ? { ...e, title: newTitle } : e
+            e.id === selectedEvent.id ? { ...e, title: newTitle, location: newLocation } : e
         ));
         setPopupType(null);
     };
@@ -76,37 +79,21 @@ function App() {
     return (
         <div className="App">
             <div className="filter-buttons">
-                <button
-                    className="btn"
-                    data-cy="test-btn"
-                    style={{
-                        display: 'inline-block',
-                        position: 'relative',
-                        zIndex: 9999,
-                        width: '40px',
-                        height: '30px',
-                        lineHeight: '30px',
-                        textAlign: 'center',
-                        backgroundColor: '#eee'
-                    }}
-                >
+                <button className="btn">
                     1
                 </button>
 
-
-
-
-                <button className="filter-btn" onClick={() => setFilter('All')}>
+                <button className="btn" onClick={() => setFilter('All')}>
                     All
                 </button>
 
-                <button className="filter-btn" onClick={() => setFilter('Past')}>
+                <button className="btn" onClick={() => setFilter('Past')}>
                     Past
                 </button>
 
                 <button
                     style={{ backgroundColor: 'rgb(140, 189, 76)' }}
-                    className="filter-btn"
+                    className="btn"
                     onClick={() => setFilter('Upcoming')}
                 >
                     Upcoming
@@ -114,7 +101,7 @@ function App() {
 
                 <button
                     style={{ backgroundColor: 'rgb(222, 105, 135)' }}
-                    className="filter-btn"
+                    className="btn"
                     onClick={() => {
                         setSelectedDate(new Date());
                         setPopupType('create');
@@ -148,6 +135,8 @@ function App() {
             />
 
 
+            {popupType && <div className="mm-popup-overlay"></div>}
+
             {popupType === 'create' && (
                 <div className="mm-popup__box">
                     <div className="mm-popup__box__header">
@@ -155,8 +144,8 @@ function App() {
                     </div>
 
                     <div className="mm-popup__box__body">
-                        <input id="eventTitle" placeholder="Event Title" />
-                        <input id="eventLocation" placeholder="Event Location" />
+                        <input id="eventTitle" name="title" placeholder="Event Title" />
+                        <input id="eventLocation" name="location" placeholder="Event Location" />
                     </div>
 
                     <div className="mm-popup__box__footer">
@@ -166,6 +155,36 @@ function App() {
                                 onClick={saveNewEvent}
                             >
                                 Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {popupType === 'edit' && selectedEvent && (
+                <div className="mm-popup__box">
+                    <div className="mm-popup__box__header">
+                        Edit Event
+                    </div>
+
+                    <div className="mm-popup__box__body">
+                        <input id="editEventTitle" name="title" placeholder="Event Title" defaultValue={selectedEvent.title} />
+                        <input id="editEventLocation" name="location" placeholder="Event Location" defaultValue={selectedEvent.location} />
+                    </div>
+
+                    <div className="mm-popup__box__footer">
+                        <div className="mm-popup__box__footer__right-space">
+                            <button
+                                className="mm-popup__btn mm-popup__btn--success"
+                                onClick={saveEditedEvent}
+                            >
+                                Save
+                            </button>
+                            <button
+                                className="mm-popup__btn mm-popup__btn--danger"
+                                onClick={deleteEvent}
+                            >
+                                Delete
                             </button>
                         </div>
                     </div>
