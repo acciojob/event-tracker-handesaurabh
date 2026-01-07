@@ -78,24 +78,24 @@ function App() {
     console.log('NODE_ENV:', process.env.NODE_ENV);
     return (
         <div className="App">
-            <div className="filter-buttons">
-                <button className="btn" onClick={() => setFilter('All')}>
+            <ul className="filter-buttons">
+                <li><button className="btn" onClick={() => setFilter('All')}>
                     All
-                </button>
+                </button></li>
 
-                <button className="btn" onClick={() => setFilter('Past')}>
+                <li><button className="btn" onClick={() => setFilter('Past')}>
                     Past
-                </button>
+                </button></li>
 
-                <button
+                <li><button
                     style={{ backgroundColor: 'rgb(140, 189, 76)' }}
                     className="btn"
                     onClick={() => setFilter('Upcoming')}
                 >
                     Upcoming
-                </button>
+                </button></li>
 
-                <button
+                <li><button
                     style={{ backgroundColor: 'rgb(222, 105, 135)' }}
                     className="btn"
                     onClick={() => {
@@ -104,8 +104,8 @@ function App() {
                     }}
                 >
                     Add Event
-                </button>
-            </div>
+                </button></li>
+            </ul>
 
 
             <Calendar
