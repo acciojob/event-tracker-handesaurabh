@@ -13,6 +13,10 @@ function App() {
     const [filter, setFilter] = useState('All');
     const [popupType, setPopupType] = useState(null);
     const [showTestBtn, setShowTestBtn] = useState(true);
+    const [newEventTitle, setNewEventTitle] = useState('');
+    const [newEventLocation, setNewEventLocation] = useState('');
+    const [editEventTitle, setEditEventTitle] = useState('');
+    const [editEventLocation, setEditEventLocation] = useState('');
 
     const handleSelectSlot = (slotInfo) => {
         setSelectedDate(slotInfo.start);
@@ -21,32 +25,31 @@ function App() {
 
     const handleSelectEvent = (event) => {
         setSelectedEvent(event);
+        setEditEventTitle(event.title);
+        setEditEventLocation(event.location);
         setPopupType('edit');
     };
 
     const saveNewEvent = () => {
-        const title = document.getElementById('eventTitle').value;
-        const location = document.getElementById('eventLocation').value;
-        if (!title) return;
+        if (!newEventTitle) return;
 
         const newEvent = {
             id: Date.now(),
-            title,
-            location,
+            title: newEventTitle,
+            location: newEventLocation,
             start: selectedDate,
             end: moment(selectedDate).add(1, 'hour').toDate()
         };
 
         setEvents([...events, newEvent]);
-
+        setNewEventTitle('');
+        setNewEventLocation('');
         setPopupType(null);
     };
 
     const saveEditedEvent = () => {
-        const newTitle = document.getElementById('editEventTitle').value;
-        const newLocation = document.getElementById('editEventLocation').value;
         setEvents(events.map(e =>
-            e.id === selectedEvent.id ? { ...e, title: newTitle, location: newLocation } : e
+            e.id === selectedEvent.id ? { ...e, title: editEventTitle, location: editEventLocation } : e
         ));
         setPopupType(null);
     };
@@ -131,7 +134,7 @@ function App() {
             />
 
 
-            {popupType && <div className="mm-popup-overlay"></div>}
+            {popupType && <div className="mm-popup-overlay" onClick={() => setPopupType(null)}></div>}
 
             {popupType === 'create' && (
                 <div className="mm-popup__box">
@@ -140,8 +143,8 @@ function App() {
                     </div>
 
                     <div className="mm-popup__box__body">
-                        <input id="eventTitle" name="title" placeholder="Event Title" />
-                        <input id="eventLocation" name="location" placeholder="Event Location" />
+                        <input id="eventTitle" name="title" placeholder="Event Title" value={newEventTitle} onChange={(e) => setNewEventTitle(e.target.value)} />
+                        <input id="eventLocation" name="location" placeholder="Event Location" value={newEventLocation} onChange={(e) => setNewEventLocation(e.target.value)} />
                     </div>
 
                     <div className="mm-popup__box__footer">
@@ -164,8 +167,8 @@ function App() {
                     </div>
 
                     <div className="mm-popup__box__body">
-                        <input id="editEventTitle" name="title" placeholder="Event Title" defaultValue={selectedEvent.title} />
-                        <input id="editEventLocation" name="location" placeholder="Event Location" defaultValue={selectedEvent.location} />
+                        <input id="editEventTitle" name="title" placeholder="Event Title" value={editEventTitle} onChange={(e) => setEditEventTitle(e.target.value)} />
+                        <input id="editEventLocation" name="location" placeholder="Event Location" value={editEventLocation} onChange={(e) => setEditEventLocation(e.target.value)} />
                     </div>
 
                     <div className="mm-popup__box__footer">
