@@ -79,10 +79,6 @@ function App() {
     return (
         <div className="App">
             <div className="filter-buttons">
-                <button className="btn">
-                    1
-                </button>
-
                 <button className="btn" onClick={() => setFilter('All')}>
                     All
                 </button>
